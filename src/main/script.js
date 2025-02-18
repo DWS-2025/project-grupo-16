@@ -5,18 +5,19 @@ const dealerships = [
 ];
 
 const cars = [
-    { name: "Toyota Corolla", km: "50,000 km", dealership: "Autos Madrid" },
-    { name: "Ford Mustang", km: "30,000 km", dealership: "Autos Madrid" },
-    { name: "Tesla Model 3", km: "20,000 km", dealership: "Autos Madrid" },
-    { name: "Honda Civic", km: "40,000 km", dealership: "Barcelona Motors" },
-    { name: "BMW M3", km: "25,000 km", dealership: "Barcelona Motors" },
-    { name: "Audi A4", km: "35,000 km", dealership: "Barcelona Motors" },
-    { name: "Mercedes-Benz C-Class", km: "27,000 km", dealership: "Barcelona Motors" },
-    { name: "Volkswagen Golf", km: "45,000 km", dealership: "Valencia Cars" },
-    { name: "Nissan Qashqai", km: "38,000 km", dealership: "Valencia Cars" },
-    { name: "Peugeot 208", km: "33,000 km", dealership: "Valencia Cars" },
-    { name: "Hyundai Tucson", km: "29,000 km", dealership: "Valencia Cars" }
+    { name: "Toyota Corolla", km: "50,000 km", dealership: "Autos Madrid", image: "resources/statics/img/Toyota-Corolla.jpg" },
+    { name: "Ford Mustang", km: "30,000 km", dealership: "Autos Madrid", image: "resources/statics/img/Ford-Mustang.jpg" },
+    { name: "Tesla Model 3", km: "20,000 km", dealership: "Autos Madrid", image: "resources/statics/img/Tesla-Model-3.jpg" },
+    { name: "Honda Civic", km: "40,000 km", dealership: "Barcelona Motors", image: "resources/statics/img/Honda-Civic.jpg" },
+    { name: "BMW M3", km: "25,000 km", dealership: "Barcelona Motors", image: "resources/statics/img/BMW-M3.jpg" },
+    { name: "Audi A4", km: "35,000 km", dealership: "Barcelona Motors", image: "resources/statics/img/Audi-A4.jpg" },
+    { name: "Mercedes-Benz C-Class", km: "27,000 km", dealership: "Barcelona Motors", image: "resources/statics/img/Mercedes-Benz-C-class.jpg" },
+    { name: "Volkswagen Golf", km: "45,000 km", dealership: "Valencia Cars", image: "resources/statics/img/Volkswagen-Golf.jpg" },
+    { name: "Nissan Qashqai", km: "38,000 km", dealership: "Valencia Cars", image: "resources/statics/img/Nissan-Qashqai.jpg" },
+    { name: "Peugeot 208", km: "33,000 km", dealership: "Valencia Cars", image: "resources/statics/img/Peugeot-208.jpg" },
+    { name: "Hyundai Tucson", km: "29,000 km", dealership: "Valencia Cars", image: "resources/statics/img/Hyundai-Tucson.jpg" }
 ];
+
 
 // Asociar coches a concesionarios
 dealerships.forEach(dealer => {
