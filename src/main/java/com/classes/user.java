@@ -1,3 +1,5 @@
+package main.java.com.classes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,22 +9,23 @@ public class user {
     private String name;
     private String email;
     private String tlf;
-    private List <Comment> comments = new ArrayList <> ();
+    private List <comment> comments = new ArrayList <> ();
+    private List <car> cars = new ArrayList <> ();
 
     public user(){}
 
-    public User(String name, String email, String tlf) {
+    public user(String name, String email, String tlf) {
         this.name = name;
         this.email = email;
         this.tlf = tlf;
     }
 
-    public long getID() {
-        return ID;
+    public int getID() {
+        return ID_user;
     }
 
-    public void setID(long id) {
-        this.id = ID;
+    public void setID(int id) {
+        this.id = ID_user;
     }
 
     public String getName() {
@@ -49,12 +52,20 @@ public class user {
         this.tlf = tlf;
     }
 
-    public List<Comment> getComments() {
+    public List <comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List <comment> comments) {
         this.comments = comments;
+    }
+
+    public List <car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List <car> cars) {
+        this.cars = cars;
     }
 
     
