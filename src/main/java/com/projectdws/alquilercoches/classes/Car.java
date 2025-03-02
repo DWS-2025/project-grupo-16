@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class car {
+public class Car {
     private String name_car;
     private String car_image;
     private int licensePlate;
@@ -10,7 +10,7 @@ public class car {
     private int price;
     private List<comment> comments = new ArrayList<>();
 
-    public car(String name_car, int licensePlate, int kmsPerHour, int year, int price) {
+    public Car(String name_car, int licensePlate, int kmsPerHour, int year, int price) {
         this.name_car = name_car;
         this.car_image=car_image;
         this.licensePlate = licensePlate;

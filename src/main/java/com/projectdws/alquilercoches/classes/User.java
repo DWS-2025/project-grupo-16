@@ -3,16 +3,16 @@ package main.java.com.classes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class user {
+public class User {
 
     private int ID_user = 00;
     private String name;
     private String email;
     private String tlf;
-    private List <comment> comments = new ArrayList <> ();
-    private List <car> cars = new ArrayList <> ();
+    private List <Comment> comments = new ArrayList <> ();
+    private List <Car> cars = new ArrayList <> ();
 
-    public user(){}
+    public User(){}
 
     public user(String name, String email, String tlf) {
         this.name = name;
@@ -60,11 +60,11 @@ public class user {
         this.comments = comments;
     }
 
-    public List <car> getCars() {
+    public List <Car> getCars() {
         return cars;
     }
 
-    public void setCars(List <car> cars) {
+    public void setCars(List <Car> cars) {
         this.cars = cars;
     }
 
