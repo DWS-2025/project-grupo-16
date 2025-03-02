@@ -1,11 +1,11 @@
-package main.java.com.classes;
+package com.projectdws.alquilercoches.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
-    private int ID_user = 00;
+    private int ID = 0;
     private String name;
     private String email;
     private String tlf;
@@ -14,18 +14,18 @@ public class User {
 
     public User(){}
 
-    public user(String name, String email, String tlf) {
+    public User(String name, String email, String tlf) {
         this.name = name;
         this.email = email;
         this.tlf = tlf;
     }
 
     public int getID() {
-        return ID_user;
+        return ID;
     }
 
-    public void setID(int id) {
-        this.id = ID_user;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -52,11 +52,11 @@ public class User {
         this.tlf = tlf;
     }
 
-    public List <comment> getComments() {
+    public List <Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List <comment> comments) {
+    public void setComments(List <Comment> comments) {
         this.comments = comments;
     }
 

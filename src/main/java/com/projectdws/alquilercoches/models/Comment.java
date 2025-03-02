@@ -1,16 +1,17 @@
-package main.java.com.classes;
+package com.projectdws.alquilercoches.models;
 
-public class comment {
+public class Comment {
 
     private int ID_comment;
     private int numberStars;
     private String message;
-    private user author;
-    private car carCommented;
+	private User author;
+	private Car carCommented;
+    
 
-    protected comment() {}
+    protected Comment() {}
 
-	public comment(int numberStars, String message) {
+	public Comment(int numberStars, String message) {
         this.numberStars = numberStars;
 		this.message = message;
 	}
@@ -19,8 +20,8 @@ public class comment {
 		return ID_comment;
 	}
 
-	public void setID(int id) {
-		this.id = ID_comment;
+	public void setID(int ID_comment) {
+		this.ID_comment = ID_comment;
 	}
 
     public int getNumberStars() {
@@ -39,24 +40,24 @@ public class comment {
 		this.message = message;
 	}
 
-	public user getAuthor() {
+	public User getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(user author) {
+	public void setAuthor(User author) {
 		this.author = author;
 	}
     
-    public car getCarCommented() {
+    public Car getCarCommented() {
 		return carCommented;
 	}
 
-	public void setCarCommented(car carCommented) {
+	public void setCarCommented(Car carCommented) {
 		this.carCommented = carCommented;
 	}	
 
 	@Override
 	public String toString() {
-		return "Comment [ID_comment: " + ID_comment + ", Author: " + author.getName() + "NumberStars: " numberStars + ", Message: " + message + "]";
+		return "Comment [ID_comment: " + ID_comment + ", Author: " + author.getName() + "NumberStars: " + numberStars + ", Message: " + message + "]";
 	}
 }

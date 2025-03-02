@@ -13,12 +13,12 @@
     <title>AlquilaYA.es</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/owl.css">
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/owl.css">
 
   </head>
 
@@ -89,41 +89,21 @@
               <a href="dealerships.html">view more <i class="fa fa-angle-right"></i></a>
             </div>
           </div>
+          
+          {{#dealerships}}
           <div class="col-md-4">
             <div class="product-item">
-              <a href="offers.html"><img src="assets/images/madrid_dealer.jpg" alt=""></a>
+              <a href="/dealership/{{ID}}"><img src="/images/{{name}}.jpg" alt=""></a>
               <div class="down-content">
-                <a href="offers.html"><h4>Concesionario PrimeMotors</h4></a>
-                <h6>Madrid</h6>
-                <h6>C/ de Santa Engracia 10</h6>
-                <p>Considerado el mejor concesionario de Madrid.</p>
+                <a href="/dealership/{{ID}}"><h4>Concesionario {{name}}</h4></a>
+                <h6>{{location}}</h6>
+                <h6>{{address}}</h6>
+                <p>{{description}}</p>
               </div>
             </div>
           </div>
-
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="offers.html"><img src="assets/images/barcelona_dealer.jpg" alt=""></a>
-              <div class="down-content">
-                <a href="offers.html"><h4>Concesionario LuxeDrive</h4></a>
-                <h6>Barcelona</h6>
-                <h6>Avinguda diagonal</h6>
-                <p>Uno de los concesionarios mas lujosos de Barcelona.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="product-item">
-              <a href="offers.html"><img src="assets/images/valencia_dealer.jpg" alt=""></a>
-              <div class="down-content">
-                <a href="offers.html"><h4>Concesionario SmartWheels</h4></a>
-                <h6>Valencia</h6>
-                <h6>Avenida del Cid</h6>
-                <p>Concesionario número 1 en cuanto a velocidad de gestión y fiabilidad.</p>
-              </div>
-            </div>
-          </div>
+          {{/dealerships}}
+          
         </div>
       </div>
     </div>
@@ -219,12 +199,12 @@
 
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Additional Scripts -->
-    <script src="assets/js/custom.js"></script>
-    <script src="assets/js/owl.js"></script>
+    <script src="/js/custom.js"></script>
+    <script src="/js/owl.js"></script>
   </body>
 </html>
