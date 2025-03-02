@@ -3,6 +3,7 @@ import java.util.List;
 
 public class car {
     private String name_car;
+    private String car_image;
     private int licensePlate;
     private int kmsPerHour;
     private int year;
@@ -11,6 +12,7 @@ public class car {
 
     public car(String name_car, int licensePlate, int kmsPerHour, int year, int price) {
         this.name_car = name_car;
+        this.car_image=car_image;
         this.licensePlate = licensePlate;
         this.kmsPerHour = kmsPerHour;
         this.year = year;
@@ -23,6 +25,14 @@ public class car {
 
     public void setName_car(String name_car) {
         this.name_car = name_car;
+    }
+
+    public void setCar_image(String car_image){
+        this.car_image=car_image;
+    }
+
+    public String getCar_image(){
+        return car_image;
     }
 
     public int getLicensePlate() {
