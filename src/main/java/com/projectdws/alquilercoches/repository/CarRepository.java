@@ -28,6 +28,7 @@ public class CarRepository {
         if (id == 0) {
             id = nextId.getAndIncrement();
             car.setID(id);
+            car.getDealership().getCars().add(car);
         }
         cars.put(id, car);
     }

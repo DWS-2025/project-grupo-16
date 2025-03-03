@@ -31,10 +31,18 @@ public class DealershipSampleService {
         dealershipService.save(d3);
 
 
-        Car c1 = new Car("bycas", "ibnueb", 62648, d1);
+        Car c1 = new Car("Audi_A4", "Audi_A4", 60000, d1);
         c1.getComments().add(new Comment(new User("Pepe", "pepe@gmail.com", "563784956"), 5, "Corre que flipas"));
         c1.getComments().add(new Comment(new User("Juan", "juan@gmail.com", "563784959"), 2, "Se me cala todo el rato"));
         carService.save(c1);
 
+
+        Car c2 = new Car("BMW_M3", "BMW_M3", 50000, d1);
+        carService.save(c2);
+        Car c3 = new Car("Ford_Mustang", "Ford_Mustang", 120000, d1);
+        carService.save(c3);
+        Car c4 = new Car("Honda_Civic", "Honda_Civic", 15000, d2);
+        carService.save(c4);
+        
     }
 }
