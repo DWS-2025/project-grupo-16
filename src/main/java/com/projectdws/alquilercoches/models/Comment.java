@@ -11,7 +11,8 @@ public class Comment {
 
     protected Comment() {}
 
-	public Comment(int numberStars, String message) {
+	public Comment(User author, int numberStars, String message) {
+		this.author = author;
         this.numberStars = numberStars;
 		this.message = message;
 	}

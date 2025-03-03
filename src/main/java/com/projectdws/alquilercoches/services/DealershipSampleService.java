@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projectdws.alquilercoches.models.Car;
+import com.projectdws.alquilercoches.models.Comment;
 import com.projectdws.alquilercoches.models.Dealership;
+import com.projectdws.alquilercoches.models.User;
 
 import jakarta.annotation.PostConstruct;
 
@@ -29,7 +31,9 @@ public class DealershipSampleService {
         dealershipService.save(d3);
 
 
-        Car c1 = new Car("bycas", "ibnueb", 876, 62648);
+        Car c1 = new Car("bycas", "ibnueb", 62648, d1);
+        c1.getComments().add(new Comment(new User("Pepe", "pepe@gmail.com", "563784956"), 5, "Corre que flipas"));
+        c1.getComments().add(new Comment(new User("Juan", "juan@gmail.com", "563784959"), 2, "Se me cala todo el rato"));
         carService.save(c1);
 
     }

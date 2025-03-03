@@ -13,10 +13,11 @@ public class Car {
 
     public Car() {}
 
-    public Car(String name, String image, int licensePlate, int price) {
+    public Car(String name, String image, int price, Dealership dealership) {
         this.name = name;
         this.image = image;
         this.price = price;
+        this.dealership = dealership;
     }
 
     public Long getID() {
