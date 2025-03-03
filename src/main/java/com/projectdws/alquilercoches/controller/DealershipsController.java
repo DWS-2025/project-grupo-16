@@ -19,14 +19,14 @@ public class DealershipsController {
 
 	@GetMapping("/")
 	public String getDealershipsFromIndex(Model model){
-		model.addAttribute("dealerships", dealershipService.findAll());
+		model.addAttribute("dealership", dealershipService.findAll());
 		System.out.println(dealershipService.findAll());
 		return "index";
 	}
 
-	@GetMapping("/dealerships")
+	@GetMapping("/dealership")
 	public String getDealerships2(Model model){
-		model.addAttribute("dealerships", dealershipService.findAll());
+		model.addAttribute("dealership", dealershipService.findAll());
 		return "index";
 	}
 
