@@ -14,17 +14,20 @@ import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Comment;
 import com.projectdws.alquilercoches.services.CarService;
 import com.projectdws.alquilercoches.services.CommentService;
+import com.projectdws.alquilercoches.services.DealershipService;
 
 @Controller
 public class CarsController {
 
     private final CarService carService;
     private final CommentService commentService;
+    private final DealershipService dealershipService;
 
     @Autowired
-    public CarsController(CarService carService, CommentService commentService) {
+    public CarsController(CarService carService, CommentService commentService, DealershipService dealershipService) {
         this.carService = carService;
         this.commentService = commentService;
+        this.dealershipService = dealershipService;
     }
 
     /**
@@ -36,13 +39,31 @@ public class CarsController {
         return "cars";
     }
 
+
+    @GetMapping("/car/new-edit")
+    public String showCreateOrEditCarForm(Model model, Car car) {
+        model.addAttribute("cars", carService.findAll());
+        model.addAttribute("dealerships", dealershipService.findAll());
+        return "new_car";
+	}
+
     /**
      * Create new car
      */
-	@PostMapping("/car/new")
-	public String newCar(Model model, Car car) {
-		carService.save(car);
-		return "new_car";
+	@PostMapping("/car/new-edit")
+	public String createOrEditCar(Model model, Car car) {
+        if(car.getID() == 0) {
+            car.setImage("a");
+            car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
+            carService.save(car);
+		    return "redirect:/car/" + car.getID();
+        } else {
+            car.setImage("a");
+            car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
+            carService.update(car.getID(), car);
+            return "redirect:/car/" + car.getID();
+        }
+		
 	}
     /**
      * Get a car ID

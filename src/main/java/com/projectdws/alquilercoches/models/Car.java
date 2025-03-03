@@ -20,6 +20,14 @@ public class Car {
         this.dealership = dealership;
     }
 
+    public Car(long ID, String name, String image, int price, Dealership dealership) {
+        this.ID = ID;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.dealership = dealership;
+    }
+
     public Long getID() {
         return ID;
     }

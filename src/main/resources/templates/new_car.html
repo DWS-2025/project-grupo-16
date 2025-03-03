@@ -1,0 +1,33 @@
+{{> common/head}}
+
+<title>New car - AlquilaYA.com</title>
+
+{{> common/header}}
+
+<div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
+    <form action="/car/new-edit" method="post">
+        <select name="ID">
+            <option value="0">Crear Coche</option>
+            {{#cars}}
+            <option value="{{ID}}">{{name}}</option>
+            {{/cars}}
+        </select>
+
+        <label for="name">Nombre</label>
+        <input type="text" name="name" id="name">
+
+        <label for="price">Precio</label>
+        <input min="1" type="number" name="price" id="price">
+
+        <label>Concesionario</label>
+        <select name="dealership.ID">
+            {{#dealerships}}
+            <option value="{{ID}}">{{name}}</option>
+            {{/dealerships}}
+        </select>
+
+        <input type="submit" value="Enviar">
+    </form>
+</div>
+
+{{> common/footer}}
