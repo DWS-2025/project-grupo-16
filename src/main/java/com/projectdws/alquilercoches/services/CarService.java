@@ -23,8 +23,12 @@ public class CarService {
 		return carRepository.findById(id);
 	}
 
-	public void save(Car car) {
-		carRepository.save(car);		
+	public boolean save(Car car) {
+		if(car.getPrice() > 0) {
+			carRepository.save(car);
+			return true;
+		}
+		return false;
 	}
 
     public void update(long id, Car updatedCar) {

@@ -7,17 +7,23 @@
 <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
     <form action="/car/new-edit" method="post">
         <select name="ID">
+            {{^edit}}
             <option value="0">Crear Coche</option>
+            {{/edit}}
             {{#cars}}
             <option value="{{ID}}">{{name}}</option>
             {{/cars}}
         </select>
 
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" required>
 
         <label for="price">Precio</label>
-        <input min="1" type="number" name="price" id="price">
+        <input type="number" name="price" id="price" required>
+
+        {{^priceError}}
+            <p style="color:red;">El precio debe ser positivo</p>
+        {{/priceError}}
 
         <label>Concesionario</label>
         <select name="dealership.ID">

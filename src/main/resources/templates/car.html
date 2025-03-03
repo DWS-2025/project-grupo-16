@@ -16,6 +16,8 @@
         <p>{{numberStars}}</p>
         <p>{{message}}</p>
       {{/car.comments}}
+      <a href="/car/{{car.ID}}/new-edit">Editar Coche</a>
+      <form action="/car/{{car.ID}}/delete" method="post"><input type="submit" value="Borrar Coche"></form>
     </div>
 
 {{> common/footer}}

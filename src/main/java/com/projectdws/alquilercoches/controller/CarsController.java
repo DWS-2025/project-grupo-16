@@ -1,5 +1,7 @@
 package com.projectdws.alquilercoches.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Comment;
+import com.projectdws.alquilercoches.models.Dealership;
 import com.projectdws.alquilercoches.services.CarService;
 import com.projectdws.alquilercoches.services.CommentService;
 import com.projectdws.alquilercoches.services.DealershipService;
@@ -39,10 +42,23 @@ public class CarsController {
         return "cars";
     }
 
-
     @GetMapping("/car/new-edit")
-    public String showCreateOrEditCarForm(Model model, Car car) {
+    public String showEditCarForm(Model model, Car car) {
+        model.addAttribute("priceError", true);
         model.addAttribute("cars", carService.findAll());
+        model.addAttribute("edit", false);
+        model.addAttribute("dealerships", dealershipService.findAll());
+        return "new_car";
+	}
+
+
+    @GetMapping("/car/{id}/new-edit")
+    public String showEditCarForm(Model model, @PathVariable long id, Car car) {
+        List <Car> cars = new ArrayList<>();
+        cars.add(carService.findById(id).get());
+        model.addAttribute("priceError", true);
+        model.addAttribute("cars", cars);
+        model.addAttribute("edit", true);
         model.addAttribute("dealerships", dealershipService.findAll());
         return "new_car";
 	}
@@ -55,11 +71,17 @@ public class CarsController {
         if(car.getID() == 0) {
             car.setImage("a");
             car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
-            carService.save(car);
+            boolean error = carService.save(car);
+            model.addAttribute("priceError", !error);
+            if(!error) return "redirect:/car/new-edit";
 		    return "redirect:/car/" + car.getID();
         } else {
+            boolean error = carService.save(car);
+            model.addAttribute("priceError", !error);
+            if(!error) return "redirect:/car/" + car.getID() + "/new-edit";
             car.setImage("a");
-            car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
+            Dealership dealership = dealershipService.findById(car.getDealership().getID()).get();
+            car.setDealership(dealership);
             carService.update(car.getID(), car);
             return "redirect:/car/" + car.getID();
         }
@@ -114,6 +136,7 @@ public class CarsController {
 		Optional<Car> car = carService.findById(id);
 		if (car.isPresent()) {
 			carService.delete(id);
+            car.get().getDealership().getCars().remove(car.get());
 			return "redirect:/dealership/" + car.get().getDealership().getID();
 		}else{
         return "car_not_found";
