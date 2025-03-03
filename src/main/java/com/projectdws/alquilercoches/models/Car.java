@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
+    private long ID = 0;
     private String name;
     private String image;
-    private int licensePlate;
     private int price;
     private Dealership dealership;
     private List <Comment> comments = new ArrayList<>();
@@ -16,8 +16,15 @@ public class Car {
     public Car(String name, String image, int licensePlate, int price) {
         this.name = name;
         this.image = image;
-        this.licensePlate = licensePlate;
         this.price = price;
+    }
+
+    public Long getID() {
+        return ID;
+    }
+
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -34,14 +41,6 @@ public class Car {
 
     public String getImage(){
         return image;
-    }
-
-    public int getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(int licensePlate) {
-        this.licensePlate = licensePlate;
     }
 
     public int getPrice() {

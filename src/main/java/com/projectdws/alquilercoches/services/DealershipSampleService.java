@@ -3,6 +3,7 @@ package com.projectdws.alquilercoches.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Dealership;
 
 import jakarta.annotation.PostConstruct;
@@ -12,6 +13,9 @@ public class DealershipSampleService {
 
     @Autowired
     private DealershipService dealershipService;
+
+    @Autowired
+    private CarService carService;
 
     @PostConstruct
 	public void init() {
@@ -23,6 +27,10 @@ public class DealershipSampleService {
         dealershipService.save(d1);
         dealershipService.save(d2);
         dealershipService.save(d3);
+
+
+        Car c1 = new Car("bycas", "ibnueb", 876, 62648);
+        carService.save(c1);
 
     }
 }

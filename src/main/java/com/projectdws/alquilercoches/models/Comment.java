@@ -2,7 +2,7 @@ package com.projectdws.alquilercoches.models;
 
 public class Comment {
 
-    private int ID_comment;
+    private int ID;
     private int numberStars;
     private String message;
 	private User author;
@@ -17,11 +17,11 @@ public class Comment {
 	}
 
 	public int getID() {
-		return ID_comment;
+		return ID;
 	}
 
-	public void setID(int ID_comment) {
-		this.ID_comment = ID_comment;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
     public int getNumberStars() {
@@ -58,6 +58,6 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [ID_comment: " + ID_comment + ", Author: " + author.getName() + "NumberStars: " + numberStars + ", Message: " + message + "]";
+		return "Comment [ID: " + ID + ", Author: " + author.getName() + "NumberStars: " + numberStars + ", Message: " + message + "]";
 	}
 }

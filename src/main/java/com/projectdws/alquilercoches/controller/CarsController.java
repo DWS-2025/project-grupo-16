@@ -34,100 +34,84 @@ public class CarsController {
 
 	@GetMapping("/cars")
 	public String getCars(Model model){
-		model.addAttribute("dealerships", carService.findAll());
+		model.addAttribute("cars", carService.findAll());
 		return "cars";
 	}
 
-	@PostMapping("/cars/new")
-	public String newPost(Model model, Car car) {
+	@PostMapping("/car/new")
+	public String newCar(Model model, Car car) {
 		carService.save(car);
 		return "new_car";
 	}
 
-	@GetMapping("/cars/{id}")
-	public String getPost(Model model, @PathVariable long id) {
+	@GetMapping("/car/{id}")
+	public String getCarById(Model model, @PathVariable long id) {
 		Optional<Car> car = carService.findById(id);
-		if (post.isPresent()) {
-			model.addAttribute("post", post.get());
-			String likedText = userService.isPostLikedByCurrentUser(post.get()) ? "Unlike" : "Like";
-			model.addAttribute("likedText", likedText);
-			return "show_post";
+		if (car.isPresent()) {
+			model.addAttribute("car", car.get());
+			return "car";
 		} else {
-			return "post_not_found";
+			return "car_not_found";
 		}
 	}
 
-	@GetMapping("/posts/{id}/edit")
-	public String editPost(Model model, @PathVariable long id) {
-		Optional<Post> post = postService.findById(id);
-		if (post.isPresent()) {
-			model.addAttribute("post", post.get());
-			return "edit_post";
+	@GetMapping("/car/{id}/edit")
+	public String editCar(Model model, @PathVariable long id) {
+		Optional<Car> car = carService.findById(id);
+		if (car.isPresent()) {
+			model.addAttribute("car", car.get());
+			return "new_car";
 		} else {
-			return "post_not_found";
+			return "car_not_found";
 		}
 	}
 
-	@PostMapping("/posts/{id}/edit")
-	public String updatePost(Model model, @PathVariable long id, Post updatedPost) {
-		Optional<Post> op = postService.findById(id);
-		if (op.isPresent()) {
-			Post oldPost = op.get();
-			postService.update(oldPost, updatedPost);
-			return "redirect:/posts/" + id;
+	@PostMapping("/car/{id}/edit")
+	public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
+		Optional<Car> car = carService.findById(id);
+		if (car.isPresent()) {
+			Car oldCar = car.get();
+			carService.update(oldCar, updatedCar);
+			return "redirect:/car/" + id;
 		} else {
-			return "post_not_found";
+			return "car_not_found";
 		}
 	}
 
-	@PostMapping("/posts/{id}/delete")
-	public String deletePost(@PathVariable long id) {
-		Optional<Post> op = postService.findById(id);
-		if (op.isPresent()) {
-			postService.delete(op.get());
-			return "redirect:/";
+	@PostMapping("/car/{id}/delete")
+	public String deleteCar(@PathVariable long id) {
+		Optional<Car> car = carService.findById(id);
+		if (car.isPresent()) {
+			carService.delete(car.get());
+			return "redirect:/dealership/" + car.get().getDealership().getID();
 		} else {
-			return "post_not_found";
+			return "car_not_found";
 		}
 	}
 
-	@PostMapping("/posts/{postId}/comments/new")
-	public String newComment(@PathVariable long postId, Comment comment) {
-		Optional<Post> op = postService.findById(postId);
-		if (op.isPresent()) {
-			Post post = op.get();
-			commentService.save(post, comment);
-			return "redirect:/posts/" + postId;
+	@PostMapping("/car/{Id}")
+	public String newComment(@PathVariable long Id, Comment comment) {
+		Optional<Car> opCar = carService.findById(Id);
+		if (opCar.isPresent()) {
+			Car car = opCar.get();
+			commentService.save(car, comment);
+			return "redirect:/car/" + Id;
 		} else {
-			return "post_not_found";
+			return "car_not_found";
 		}
 	}
 
-	@PostMapping("/posts/{postId}/comments/{commentId}/delete")
-	public String deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
-
-		Optional<Post> op = postService.findById(postId);
-
-		if (op.isPresent()) {
-			Post post = op.get();
-			commentService.delete(commentId, post);
-			return "redirect:/posts/" + postId;
+	@PostMapping("/car/{Id}")
+	public String deleteComment(@PathVariable Long carId, Long commentId) {
+        Optional<Car> opCar = carService.findById(carId);
+		if (opCar.isPresent()) {
+			Car car = opCar.get();
+			commentService.delete(commentId, car);
+			return "redirect:/car/" + carId;
 		} else {
-			return "post_not_found";
+			return "car_not_found";
 		}
 		
 	}
 
-	@PostMapping("/posts/{postId}/likeToggle")
-	public String likePost(@PathVariable Long postId, Long userId) {
-		Optional<Post> op = postService.findById(postId);
-		if (op.isPresent()) {
-			Post post = op.get();
-			userService.likeOrUnlikePost(userId, post);
-			return "redirect:/posts/" + postId;
-		} else {
-			return "post_not_found";
-		}
-	}
-    
 }
