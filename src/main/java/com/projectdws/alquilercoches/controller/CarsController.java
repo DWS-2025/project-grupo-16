@@ -32,11 +32,17 @@ public class CarsController {
         this.dealershipService = dealershipService;
     }
 
+	@GetMapping("/cars")
+	public String getCars(Model model){
+		model.addAttribute("cars", carService.findAll());
+		return "cars";
+	}
+
     /**
      * Get all cars
      */
     @GetMapping("/all")
-    public String getCars(Model model) {
+    public String getAllCars(Model model) {
         model.addAttribute("cars", carService.findAll());
         return "cars";
     }
@@ -44,24 +50,24 @@ public class CarsController {
     /**
      * Create new car
      */
-    @PostMapping("/new")
-    public String newCar(@ModelAttribute Car car) {
-        carService.save(car);
-        return "redirect:/car/all";
-    }
-
+	@PostMapping("/car/new")
+	public String newCar(Model model, Car car) {
+		carService.save(car);
+		return "new_car";
+	}
     /**
      * Get a car ID
      */
-    @GetMapping("/{id}")
-    public String getCarById(Model model, @PathVariable long id) {
+	@GetMapping("/car/{id}")
+	public String getCarById(Model model, @PathVariable long id) {
         Optional<Car> car = carService.findById(id);
         if (car.isPresent()) {
-            model.addAttribute("car", car.get());
-            return "car";
-        }
-        return "car_not_found";
-    }
+			model.addAttribute("car", car.get());
+			return "car";
+		} else {
+			return "car_not_found";
+		}
+	}
 
     /**
      * Edit a car
@@ -79,28 +85,31 @@ public class CarsController {
     /**
      * Save changes
      */
-    @PostMapping("/{id}/edit")
-    public String updateCar(@PathVariable long id, @ModelAttribute Car updatedCar) {
-        Optional<Car> car = carService.findById(id);
-        if (car.isPresent()) {
-            carService.update(car.get(), updatedCar);
-            return "redirect:/car/" + id;
-        }
+    @PostMapping("/car/{id}/edit")
+	public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
+		Optional<Car> car = carService.findById(id);
+		if (car.isPresent()) {
+			Car oldCar = car.get();
+			carService.update(oldCar, updatedCar);
+			return "redirect:/car/" + id;
+        } else {
         return "car_not_found";
+		}
     }
 
     /**
      * Delete a car
      */
-    @PostMapping("/{id}/delete")
-    public String deleteCar(@PathVariable long id) {
-        Optional<Car> car = carService.findById(id);
-        if (car.isPresent()) {
-            Long dealershipId = car.get().getDealership() != null ? car.get().getDealership().getID() : null;
-            carService.delete(car.get());
-            return dealershipId != null ? "redirect:/dealership/" + dealershipId : "redirect:/car/all";
-        }
+	@PostMapping("/car/{id}/delete")
+	public String deleteCar(@PathVariable long id) {
+		Optional<Car> car = carService.findById(id);
+		if (car.isPresent()) {
+			carService.delete(car.get());
+			return "redirect:/dealership/" + car.get().getDealership().getID();
+		}else{
         return "car_not_found";
+		}
+
     }
 
     // ----------- COMMENTS SECTION -----------
