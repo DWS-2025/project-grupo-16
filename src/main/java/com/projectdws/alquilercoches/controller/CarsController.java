@@ -5,43 +5,32 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import com.projectdws.alquilercoches.models.Comment;
 import com.projectdws.alquilercoches.models.Car;
+import com.projectdws.alquilercoches.models.Comment;
 import com.projectdws.alquilercoches.services.CarService;
 import com.projectdws.alquilercoches.services.CommentService;
-import com.projectdws.alquilercoches.services.DealershipService;
-import com.projectdws.alquilercoches.services.UserService;
 
 @Controller
-@RequestMapping("/car")
 public class CarsController {
 
     private final CarService carService;
     private final CommentService commentService;
-    private final UserService userService;
-    private final DealershipService dealershipService;
 
     @Autowired
-    public CarsController(CarService carService, CommentService commentService,
-                          UserService userService, DealershipService dealershipService) {
+    public CarsController(CarService carService, CommentService commentService) {
         this.carService = carService;
         this.commentService = commentService;
-        this.userService = userService;
-        this.dealershipService = dealershipService;
     }
-
-	@GetMapping("/cars")
-	public String getCars(Model model){
-		model.addAttribute("cars", carService.findAll());
-		return "cars";
-	}
 
     /**
      * Get all cars
      */
-    @GetMapping("/all")
+    @GetMapping("/cars")
     public String getAllCars(Model model) {
         model.addAttribute("cars", carService.findAll());
         return "cars";
@@ -72,7 +61,7 @@ public class CarsController {
     /**
      * Edit a car
      */
-    @GetMapping("/{id}/edit")
+    @GetMapping("/car/{id}/edit")
     public String editCar(Model model, @PathVariable long id) {
         Optional<Car> car = carService.findById(id);
         if (car.isPresent()) {
@@ -89,8 +78,7 @@ public class CarsController {
 	public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
 		Optional<Car> car = carService.findById(id);
 		if (car.isPresent()) {
-			Car oldCar = car.get();
-			carService.update(oldCar, updatedCar);
+			carService.update(id, updatedCar);
 			return "redirect:/car/" + id;
         } else {
         return "car_not_found";
@@ -104,7 +92,7 @@ public class CarsController {
 	public String deleteCar(@PathVariable long id) {
 		Optional<Car> car = carService.findById(id);
 		if (car.isPresent()) {
-			carService.delete(car.get());
+			carService.delete(id);
 			return "redirect:/dealership/" + car.get().getDealership().getID();
 		}else{
         return "car_not_found";
@@ -117,7 +105,7 @@ public class CarsController {
     /**
      * Post a comment
      */
-    @PostMapping("/{id}/comment")
+    @PostMapping("/car/{id}/comment")
     public String newComment(@PathVariable long id, @ModelAttribute Comment comment) {
         Optional<Car> opCar = carService.findById(id);
         if (opCar.isPresent()) {
@@ -130,7 +118,7 @@ public class CarsController {
     /**
      * Delete a comment
      */
-    @PostMapping("/{carId}/comment/{commentId}/delete")
+    @PostMapping("/car/{carId}/comment/{commentId}/delete")
     public String deleteComment(@PathVariable Long carId, @PathVariable Long commentId) {
         Optional<Car> opCar = carService.findById(carId);
         if (opCar.isPresent()) {

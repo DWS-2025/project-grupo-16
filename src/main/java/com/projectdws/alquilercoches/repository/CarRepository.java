@@ -32,11 +32,15 @@ public class CarRepository {
         cars.put(id, car);
     }
 
-    public void update(Car oldCar, Car updatedCar) {
-
+    public void update(long id, Car updatedCar) {
+        Car oldCar = cars.get(id);
+        oldCar.setName(updatedCar.getName());
+        oldCar.setImage(updatedCar.getImage());
+        oldCar.setPrice(updatedCar.getPrice());
+        oldCar.setDealership(updatedCar.getDealership());
     }
 
-    public void delete(Car car) {
-        
+    public void delete(long id) {
+        cars.remove(id);
     }
 }

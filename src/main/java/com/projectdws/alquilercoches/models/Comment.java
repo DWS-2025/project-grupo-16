@@ -2,7 +2,7 @@ package com.projectdws.alquilercoches.models;
 
 public class Comment {
 
-    private int ID;
+    private long ID = 0;
     private int numberStars;
     private String message;
 	private User author;
@@ -16,11 +16,11 @@ public class Comment {
 		this.message = message;
 	}
 
-	public int getID() {
+	public long getID() {
 		return ID;
 	}
 
-	public void setID(int ID) {
+	public void setID(long ID) {
 		this.ID = ID;
 	}
 

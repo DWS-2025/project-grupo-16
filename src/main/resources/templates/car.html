@@ -56,13 +56,17 @@
         </nav>
       </header>
 
-    <!-- Error Page Content -->
-    <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">        
-        <h1 class="display-4">404</h1>
-        <h3>Coche No Encontrado</h3>
-        <p>Lo sentimos, pero el coche que buscas no está disponible o no existe.</p>
-        <a href="/index.html" class="btn btn-primary">Volver al Inicio</a>
+    <!--Car info-->
+    <div>
+      {{car.name}}
+      {{car.image}}
+      {{car.price}}
+      {{car.dealership}}
+
+      {{#car.comments}}
+      {{/car.comments}}
     </div>
+
 
     <!-- Footer -->
     <footer>

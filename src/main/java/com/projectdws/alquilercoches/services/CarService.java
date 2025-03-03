@@ -27,11 +27,11 @@ public class CarService {
 		carRepository.save(car);		
 	}
 
-    public void update(Car oldCar, Car updatedCar) {
-        carRepository.update(oldCar, updatedCar);
+    public void update(long id, Car updatedCar) {
+        carRepository.update(id, updatedCar);
     }
 
-    public void delete(Car car) {
-        carRepository.delete(car);
+    public void delete(long id) {
+        carRepository.delete(id);
     }
 }

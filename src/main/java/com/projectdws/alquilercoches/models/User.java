@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 
-    private int ID = 0;
+    private long ID = 0;
     private String name;
     private String email;
     private String tlf;
@@ -20,11 +20,11 @@ public class User {
         this.tlf = tlf;
     }
 
-    public int getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 
