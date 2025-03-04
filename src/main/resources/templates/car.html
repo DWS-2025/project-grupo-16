@@ -7,7 +7,7 @@
     <!--Car info-->
     <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
       <p><h4>Nombre: {{car.name}}</h4></p>
-      <p>{{car.image}}</p>
+      <img src="{{car.image}}" alt="{{car.name}}" style="max-width: 500px;">
       <p><h4>Precio: {{car.price}}$</h4></p>
       <p><h4>Concesionario: {{car.dealership.name}}</h4></p>
       <br>
@@ -24,6 +24,4 @@
     </div>
 
 {{> common/footer}}
-
-
     
