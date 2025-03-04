@@ -69,7 +69,7 @@ public class CarsController {
 	@PostMapping("/car/new-edit")
 	public String createOrEditCar(Model model, Car car) {
         if(car.getID() == 0) {
-            car.setImage("a");
+            car.setImage("car.image");
             car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
             boolean error = carService.save(car);
             model.addAttribute("priceError", !error);
