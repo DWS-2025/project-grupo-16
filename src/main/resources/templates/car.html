@@ -6,16 +6,19 @@
 
     <!--Car info-->
     <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
-      <p>{{car.name}}</p>
+      <p><h4>Nombre: {{car.name}}</h4></p>
       <p>{{car.image}}</p>
-      <p>{{car.price}}</p>
-      <p>{{car.dealership.name}}</p>
-      
+      <p><h4>Precio: {{car.price}}$</h4></p>
+      <p><h4>Concesionario: {{car.dealership.name}}</h4></p>
+      <br>
+      <h3>Comentarios:</h3>
       {{#car.comments}}
-        <p>{{author.name}}</p>
-        <p>{{numberStars}}</p>
-        <p>{{message}}</p>
+      <br>
+        <p><h4>Autor: {{author.name}}</h4></p>
+        <p><h4>{{numberStars}} Estrellas</h4></p>
+        <p><h5>{{message}}</h5></p>
       {{/car.comments}}
+      <br><br>
       <a href="/car/{{car.ID}}/new-edit">Editar Coche</a>
       <form action="/car/{{car.ID}}/delete" method="post"><input type="submit" value="Borrar Coche"></form>
     </div>
