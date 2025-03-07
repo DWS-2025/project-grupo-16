@@ -2,6 +2,7 @@ package com.projectdws.alquilercoches.services;
 
 import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Comment;
+import com.projectdws.alquilercoches.repository.CarRepository;
 import com.projectdws.alquilercoches.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,10 @@ public class CommentService {
 
     public void delete(Long commentId, Car car) {
         Optional<Comment> comment = commentRepository.findById(commentId);
-        if (comment.isPresent() && comment.get().getCarCommented().equals(car)) {
-            commentRepository.delete(comment.get());
+        if (comment.isPresent()) {
+            car.getComments().remove(comment.get()); // Remover de la lista del coche
+            CarRepository.save(car);  // Guardar el coche sin el comentario
+            commentRepository.delete(comment.get());  // Eliminar de la BD
         }
     }
 }

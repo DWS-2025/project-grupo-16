@@ -196,8 +196,8 @@ public String getCar(@PathVariable long id, Model model) {
     public String deleteComment(@PathVariable Long carId, @PathVariable Long commentId) {
         Optional<Car> opCar = carService.findById(carId);
         if (opCar.isPresent()) {
-            commentService.delete(commentId, opCar.get());
-            return "redirect:/car/" + carId;
+                commentService.delete(commentId, opCar.get());
+                return "redirect:/car/" + carId;       
         }
         return "car_not_found";
     }

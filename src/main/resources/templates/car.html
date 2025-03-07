@@ -17,6 +17,10 @@
         <p><strong>Autor:</strong> {{author.name}}</p>
         <p><strong>Valoración:</strong> {{numberStars}} estrellas</p>
         <p>{{message}}</p>
+        <form action="/car/{{car.ID}}/comment/{{ID}}/delete" method="post">
+          <input type="submit" value="Eliminar Comentario" class="btn btn-danger">
+      </form>
+      
       {{/car.comments}}
       <br><br>
       <a href="/car/{{car.ID}}/new-edit">Editar Coche</a>

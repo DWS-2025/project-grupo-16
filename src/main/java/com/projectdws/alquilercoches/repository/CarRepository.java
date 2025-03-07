@@ -12,26 +12,26 @@ import com.projectdws.alquilercoches.models.Car;
 @Component
 public class CarRepository {
 
-    final private AtomicLong nextId = new AtomicLong(1L);
-    
-    final private ConcurrentHashMap<Long, Car> cars = new ConcurrentHashMap<>();
-
-    public List<Car> findAll() {
-        return cars.values().stream().toList();
-    }
-
-    public Optional<Car> findById(long id) {
-        return Optional.ofNullable(cars.get(id));
-    }
-
-    public void save(Car car) {
-        long id = car.getID();
-        if (id == 0) {
-            id = nextId.getAndIncrement();
-            car.setID(id);
-            car.getDealership().getCars().add(car);
-        }
-        cars.put(id, car);
+    final private static AtomicLong nextId = new AtomicLong(1L);
+        
+        final private static ConcurrentHashMap<Long, Car> cars = new ConcurrentHashMap<>();
+            
+                public List<Car> findAll() {
+                    return cars.values().stream().toList();
+                }
+            
+                public Optional<Car> findById(long id) {
+                    return Optional.ofNullable(cars.get(id));
+                }
+            
+                public static void save(Car car) {
+                    long id = car.getID();
+                    if (id == 0) {
+                        id = nextId.getAndIncrement();
+                    car.setID(id);
+                    car.getDealership().getCars().add(car);
+                }
+                cars.put(id, car);
     }
 
     public void update(long id, Car updatedCar) {
