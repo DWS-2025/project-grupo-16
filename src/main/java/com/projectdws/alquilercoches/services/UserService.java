@@ -1,5 +1,6 @@
 package com.projectdws.alquilercoches.services;
 
+import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.User;
 import com.projectdws.alquilercoches.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,22 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+	public Optional<User> findById(long id) {
+		return userRepository.findById(id);
+	}
+
+	public void save(User user) {
+		userRepository.save(user);
+	}
+
+    public void update(User user) {
+		userRepository.save(user);
+	}
+	
+
+    public void delete(long id) {
+        userRepository.delete(id);
     }
 }
