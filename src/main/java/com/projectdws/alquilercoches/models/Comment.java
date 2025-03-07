@@ -9,7 +9,7 @@ public class Comment {
 	private Car carCommented;
     
 
-    protected Comment() {}
+    public Comment() {}
 
 	public Comment(User author, int numberStars, String message) {
 		this.author = author;

@@ -31,9 +31,10 @@ public class CarService {
 		return false;
 	}
 
-    public void update(long id, Car updatedCar) {
-        carRepository.update(id, updatedCar);
-    }
+    public void update(Car car) {
+		carRepository.save(car);  // Guarda los cambios en el coche
+	}
+	
 
     public void delete(long id) {
         carRepository.delete(id);

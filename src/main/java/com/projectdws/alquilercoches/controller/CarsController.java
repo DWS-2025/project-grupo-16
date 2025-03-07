@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Comment;
 import com.projectdws.alquilercoches.models.Dealership;
+import com.projectdws.alquilercoches.models.User;
 import com.projectdws.alquilercoches.services.CarService;
 import com.projectdws.alquilercoches.services.CommentService;
 import com.projectdws.alquilercoches.services.DealershipService;
@@ -82,7 +84,7 @@ public class CarsController {
             car.setImage("a");
             Dealership dealership = dealershipService.findById(car.getDealership().getID()).get();
             car.setDealership(dealership);
-            carService.update(car.getID(), car);
+            carService.update(car);
             return "redirect:/car/" + car.getID();
         }
 		
@@ -91,15 +93,14 @@ public class CarsController {
      * Get a car ID
      */
 	@GetMapping("/car/{id}")
-	public String getCarById(Model model, @PathVariable long id) {
-        Optional<Car> car = carService.findById(id);
-        if (car.isPresent()) {
-			model.addAttribute("car", car.get());
-			return "car";
-		} else {
-			return "car_not_found";
-		}
-	}
+public String getCar(@PathVariable long id, Model model) {
+    Optional<Car> opCar = carService.findById(id);
+    if (opCar.isPresent()) {
+        model.addAttribute("car", opCar.get()); // <- Aquí se añade el coche con su ID
+        return "car";
+    }
+    return "car_not_found";
+}
 
     /**
      * Edit a car
@@ -121,7 +122,7 @@ public class CarsController {
 	public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
 		Optional<Car> car = carService.findById(id);
 		if (car.isPresent()) {
-			carService.update(id, updatedCar);
+			carService.update(updatedCar);
 			return "redirect:/car/" + id;
         } else {
         return "car_not_found";
@@ -150,14 +151,43 @@ public class CarsController {
      * Post a comment
      */
     @PostMapping("/car/{id}/comment")
-    public String newComment(@PathVariable long id, @ModelAttribute Comment comment) {
+    public String newComment(@PathVariable long id, 
+                             @RequestParam String message, 
+                             @RequestParam int numberStars, 
+                             @RequestParam String authorName) {  
+    
         Optional<Car> opCar = carService.findById(id);
+    
         if (opCar.isPresent()) {
-            commentService.save(opCar.get(), comment);
-            return "redirect:/car/" + id;
+            Car car = opCar.get();
+            
+            // Crear comentario con los datos recibidos
+            Comment comment = new Comment();
+            comment.setMessage(message);
+            comment.setNumberStars(numberStars);
+    
+            // Crear y asignar autor
+            User author = new User();
+            author.setName(authorName);
+            comment.setAuthor(author);
+    
+            // Asociar comentario con el coche
+            comment.setCarCommented(car);
+    
+            // Guardar el comentario en el repositorio
+            commentService.save(car, comment);
+    
+            // **Actualizar el coche con los nuevos comentarios**
+            car.getComments().add(comment);  // Asegura que el comentario se añade a la lista
+            carService.update(car);  // Asegurar que el coche se actualiza en la BD
+    
+            return "redirect:/car/" + id;  // Recargar la página con los datos actualizados
         }
+    
         return "car_not_found";
     }
+    
+
 
     /**
      * Delete a comment

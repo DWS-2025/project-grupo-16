@@ -13,14 +13,33 @@
       <br>
       <h3>Comentarios:</h3>
       {{#car.comments}}
-      <br>
-        <p><h4>Autor: {{author.name}}</h4></p>
-        <p><h4>{{numberStars}} Estrellas</h4></p>
-        <p><h5>{{message}}</h5></p>
+        <br>
+        <p><strong>Autor:</strong> {{author.name}}</p>
+        <p><strong>Valoración:</strong> {{numberStars}} estrellas</p>
+        <p>{{message}}</p>
       {{/car.comments}}
       <br><br>
       <a href="/car/{{car.ID}}/new-edit">Editar Coche</a>
       <form action="/car/{{car.ID}}/delete" method="post"><input type="submit" value="Borrar Coche"></form>
+      <form action="/car/{{car.ID}}/comment" method="post">
+        <label for="authorName">Nombre:</label>
+        <input type="text" id="authorName" name="authorName" required>
+    
+        <label for="message">Comentario:</label>
+        <textarea id="message" name="message" required></textarea>
+    
+        <label for="numberStars">Estrellas:</label>
+        <select id="numberStars" name="numberStars">
+            <option value="1">1 estrella</option>
+            <option value="2">2 estrellas</option>
+            <option value="3">3 estrellas</option>
+            <option value="4">4 estrellas</option>
+            <option value="5">5 estrellas</option>
+        </select>
+    
+        <input type="submit" value="Enviar comentario" class="btn btn-orange">
+    </form>
+       
     </div>
 
 {{> common/footer}}
