@@ -162,27 +162,27 @@ public String getCar(@PathVariable long id, Model model) {
         if (opCar.isPresent()) {
             Car car = opCar.get();
             
-            // Crear comentario con los datos recibidos
+            // Create comment with the received data
             Comment comment = new Comment();
             comment.setMessage(message);
             comment.setNumberStars(numberStars);
     
-            // Crear y asignar autor
+            // Create and assign author
             User author = new User();
             author.setName(authorName);
             comment.setAuthor(author);
     
-            // Asociar comentario con el coche
+            // Associate the comment and the car
             comment.setCarCommented(car);
     
-            // Guardar el comentario en el repositorio
+            // Save the commend in the repository
             commentService.save(car, comment);
     
-            // **Actualizar el coche con los nuevos comentarios**
-            car.getComments().add(comment);  // Asegura que el comentario se añade a la lista
-            carService.update(car);  // Asegurar que el coche se actualiza en la BD
+            // **Update the car with the new comments**
+            car.getComments().add(comment);  // Ensure the comment gets added to the list
+            carService.update(car);  // Ensure the car gets updated in the database
     
-            return "redirect:/car/" + id;  // Recargar la página con los datos actualizados
+            return "redirect:/car/" + id;  // Refresh the page with the updated data
         }
     
         return "car_not_found";

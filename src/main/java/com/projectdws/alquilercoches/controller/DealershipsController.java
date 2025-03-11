@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projectdws.alquilercoches.models.Dealership;
 import com.projectdws.alquilercoches.services.DealershipService;
@@ -40,5 +41,12 @@ public class DealershipsController {
 			return "dealership_not_found";
 		}
 	}
+
+	@GetMapping("/dealership/new-edit")
+	public String showForm(@RequestParam(required = false) Long ID, Model model){/*not sure for now how i'll handle the ID thing, whether i'll use there being a coincidence of id with another dealership for an error of sorts or i'll use it to make it an "edit" form */
+	
+		return "new_dealership";
+	} /*  */
+
 
 }
