@@ -1,0 +1,31 @@
+{{> common/head}}
+
+<title>New User - AlquilaYA.com</title>
+
+{{> common/header}}
+
+<div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
+    <form action="/user/new-edit" method="post">
+        <select name="ID">
+            {{^edit}}
+            <option value="0">Crear Usuario</option>
+            {{/edit}}
+            {{#users}}
+            <option value="{{ID}}">{{name}}</option>
+            {{/users}}
+        </select>
+
+        <label for="name">Nombre</label>
+        <input type="text" name="name" id="name" required>
+
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" required>
+
+        <label for="tlf">Teléfono</label>
+        <input type="text" name="tlf" id="tlf" required>
+
+        <input type="submit" value="Enviar">
+    </form>
+</div>
+
+{{> common/footer}}

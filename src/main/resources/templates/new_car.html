@@ -16,10 +16,10 @@
         </select>
 
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="name" required>
+        <input type="text" name="name" id="name" value="{{car.name}}" required>
 
         <label for="price">Precio</label>
-        <input type="number" name="price" id="price" required>
+        <input type="number" name="price" id="price" value="{{car.price}}" required>
 
         {{^priceError}}
             <p style="color:red;">El precio debe ser positivo</p>

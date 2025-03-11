@@ -62,6 +62,7 @@ public class CarsController {
         model.addAttribute("cars", cars);
         model.addAttribute("edit", true);
         model.addAttribute("dealerships", dealershipService.findAll());
+        model.addAttribute("car", carService.findById(id).get());
         return "new_car";
 	}
 

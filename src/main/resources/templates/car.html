@@ -4,47 +4,52 @@
 
 {{> common/header}}
 
-    <!--Car info-->
-    <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
-      <p><h4>Nombre: {{car.name}}</h4></p>
-      <img src="/images/{{car.image}}.jpg" alt="{{car.name}}" style="max-width: 500px;">
-      <p><h4>Precio: {{car.price}}$</h4></p>
-      <p><h4>Concesionario: {{car.dealership.name}}</h4></p>
-      <br>
-      <h3>Comentarios:</h3>
-      {{#car.comments}}
-        <br>
-        <p><strong>Autor:</strong> {{author.name}}</p>
-        <p><strong>Valoración:</strong> {{numberStars}} estrellas</p>
-        <p>{{message}}</p>
-        <form action="/car/{{car.ID}}/comment/{{ID}}/delete" method="post">
-          <input type="submit" value="Eliminar Comentario" class="btn btn-danger">
-      </form>
-      
-      {{/car.comments}}
-      <br><br>
-      <a href="/car/{{car.ID}}/new-edit">Editar Coche</a>
-      <form action="/car/{{car.ID}}/delete" method="post"><input type="submit" value="Borrar Coche"></form>
-      <form action="/car/{{car.ID}}/comment" method="post">
-        <label for="authorName">Nombre:</label>
-        <input type="text" id="authorName" name="authorName" required>
-    
-        <label for="message">Comentario:</label>
-        <textarea id="message" name="message" required></textarea>
-    
-        <label for="numberStars">Estrellas:</label>
-        <select id="numberStars" name="numberStars">
-            <option value="1">1 estrella</option>
-            <option value="2">2 estrellas</option>
-            <option value="3">3 estrellas</option>
-            <option value="4">4 estrellas</option>
-            <option value="5">5 estrellas</option>
-        </select>
-    
-        <input type="submit" value="Enviar comentario" class="btn btn-orange">
-    </form>
-       
-    </div>
+<!--Car info-->
+<div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
+  <p>
+  <h4>Nombre: {{car.name}}</h4>
+  </p>
+  <img src="/images/{{car.image}}.jpg" alt="{{car.name}}" style="max-width: 500px;">
+  <p>
+  <h4>Precio: {{car.price}}$</h4>
+  </p>
+  <p>
+  <h4>Concesionario: {{car.dealership.name}}</h4>
+  </p>
+  <br>
+  <h3>Comentarios:</h3>
+  {{#car.comments}}
+  <br>
+  <p><strong>Autor:</strong> {{author.name}}</p>
+  <p><strong>Valoración:</strong> {{numberStars}} estrellas</p>
+  <p>{{message}}</p>
+  <form action="/car/{{car.ID}}/comment/{{ID}}/delete" method="post">
+    <input type="submit" value="Eliminar Comentario" class="btn btn-danger">
+  </form>
+
+  {{/car.comments}}
+  <br><br>
+  <a href="/car/{{car.ID}}/new-edit">Editar Coche</a>
+  <form action="/car/{{car.ID}}/delete" method="post"><input type="submit" value="Borrar Coche"></form>
+  <form action="/car/{{car.ID}}/comment" method="post">
+    <label for="authorName">Nombre:</label>
+    <input type="text" id="authorName" name="authorName" required>
+
+    <label for="message">Comentario:</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <label for="numberStars">Estrellas:</label>
+    <select id="numberStars" name="numberStars">
+      <option value="1">1 estrella</option>
+      <option value="2">2 estrellas</option>
+      <option value="3">3 estrellas</option>
+      <option value="4">4 estrellas</option>
+      <option value="5">5 estrellas</option>
+    </select>
+
+    <input type="submit" value="Enviar comentario" class="btn btn-orange">
+  </form>
+
+</div>
 
 {{> common/footer}}
-    

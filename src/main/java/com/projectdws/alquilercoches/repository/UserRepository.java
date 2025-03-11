@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.projectdws.alquilercoches.models.User;
 
-
 @Component
 public class UserRepository {
 
@@ -42,6 +41,11 @@ public class UserRepository {
     }
 
     public void delete(long id) {
-        users.remove(id);
+        User user = users.get(id);
+        if (user != null) {
+            user.getCars().clear();
+            user.getComments().clear();
+            users.remove(id);
+        }
     }
 }
