@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,8 +74,8 @@ public class CarsController {
             car.setImage("car.image");
             car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
             boolean error = carService.save(car);
-            model.addAttribute("priceError", !error);
-            if(!error) return "redirect:/car/new-edit";
+            model.addAttribute("priceError", error);
+            if(!error) return "/invalid_car_price";
 		    return "redirect:/car/" + car.getID();
         } else {
             boolean error = carService.save(car);
