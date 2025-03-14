@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Component;
 
-import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Dealership;
 
 @Component
@@ -32,18 +31,6 @@ public class DealershipRepository {
             dealership.setID(id);
         }
         dealerships.put(id, dealership);
-    }
-
-    public void update(long id, Dealership updatedDealership) {
-        Dealership oldDealership = dealerships.get(id);
-     oldDealership.setName(updatedDealership.getName());
-     /*oldDealership.setImage(updatedDealership.getImage());*/
-     oldDealership.setTlf(updatedDealership.getTlf());
-     oldDealership.setAddress(updatedDealership.getAddress());
-     oldDealership.setID(updatedDealership.getID());
-     oldDealership.setLocation(updatedDealership.getLocation());
-     oldDealership.setDescription(updatedDealership.getDescription());
-    
     }
 
 }
