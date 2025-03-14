@@ -47,7 +47,8 @@ public class UsersController {
     @PostMapping("/user/new-edit")
 	public String createOrEditUser(Model model, User user) {
         if(user.getID() == 0) {
-		    return "redirect:/user/" + user.getID();
+		    
+            return "redirect:/user/" + user.getID();
         } else {
             userService.update(user);
             return "redirect:/user/" + user.getID();

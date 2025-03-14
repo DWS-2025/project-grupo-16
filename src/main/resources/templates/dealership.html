@@ -5,19 +5,47 @@
 {{> common/header}}
 
 <!-- Page Content -->
-
 <div class="page-heading about-heading header-text"
   style="background-image: url(assets/images/heading-6-1920x500.jpg);">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="text-content">
-          <h2>{{dealership.name}}</h2>
+          <div class="text-content">
+              <h2>{{dealership.name}}</h2>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dealership Details -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Descripción</h4>
+          <p class="card-text">{{dealership.description}}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Información de Contacto</h4>
+          <ul class="list-unstyled">
+            <li><strong>Ubicación:</strong> {{dealership.location}}</li>
+            <li><strong>Dirección:</strong> {{dealership.address}}</li>
+            <li><strong>Teléfono:</strong> {{dealership.tlf}}</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Cars Listing -->
 <div class="products">
   <div class="container">
     <div class="row">
@@ -37,6 +65,5 @@
     </div>
   </div>
 </div>
-
 
 {{> common/footer}}
