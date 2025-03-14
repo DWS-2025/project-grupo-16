@@ -5,10 +5,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Dealership;
 import com.projectdws.alquilercoches.services.DealershipService;
 
@@ -43,10 +47,36 @@ public class DealershipsController {
 	}
 
 	@GetMapping("/dealership/new-edit")
-	public String showForm(@RequestParam(required = false) Long ID, Model model){/*not sure for now how i'll handle the ID thing, whether i'll use there being a coincidence of id with another dealership for an error of sorts or i'll use it to make it an "edit" form */
-	
+	public String showForm(Model model, @RequestParam(required = false) Long ID, String name, String location, String address, String tlf, String description){/*not sure for now how i'll handle the ID thing, whether i'll use there being a coincidence of id with another dealership for an error of sorts or i'll use it to make it an "edit" form */
+	model.addAttribute("address", address);
+	model.addAttribute("location", location);
+	model.addAttribute("name", name);
+	model.addAttribute("description", description);
+	model.addAttribute("tlf", tlf);
+	/*if (id > 0){
+
+		/*dealership exists and the form works for editing it*/
+	/* }*/
 		return "new_dealership";
 	} /*  */
 
+	@PostMapping("/dealership/new-edit")
+	public String createOrEditDealership(Model model, Dealership dealership) {
+        if(dealership.getID() == 0) {
+            /*dealership.setImage("dealership.image");*/
+            dealershipService.save(dealership);
+		    return "redirect:/dealership/" + dealership.getID();
+        } else {
+            
+            
+            
+            /*dealership.setImage("a");*/
+            
+            
+            dealershipService.update(dealership);
+            return "redirect:/dealership/" + dealership.getID();
+        }
+		
+	}
 
 }
