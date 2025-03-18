@@ -1,3 +1,5 @@
+Grupo 16
+
 Nombre: AlquilaYa
 
 Desarrolladores: Iván López Gordo, Carlos Moreno Cano, Fermín Aragonés González, Óscar Rodríguez Pérez.
