@@ -79,7 +79,7 @@ public class CarsController {
         car.setDealerships(selectedDealerships);
 
         boolean error = carService.save(car);
-        model.addAttribute("priceError", !error);
+        model.addAttribute("priceError", error);
 
         if (!error) {
             return "redirect:/car/" + car.getID();
