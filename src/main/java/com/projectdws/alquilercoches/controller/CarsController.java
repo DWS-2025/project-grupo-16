@@ -50,12 +50,11 @@ public class CarsController {
         model.addAttribute("edit", false);
         model.addAttribute("dealerships", dealershipService.findAll());
         return "new_car";
-	}
-
+    }
 
     @GetMapping("/car/{id}/new-edit")
     public String showEditCarForm(Model model, @PathVariable long id, Car car) {
-        List <Car> cars = new ArrayList<>();
+        List<Car> cars = new ArrayList<>();
         cars.add(carService.findById(id).get());
         model.addAttribute("priceError", true);
         model.addAttribute("cars", cars);
@@ -63,44 +62,43 @@ public class CarsController {
         model.addAttribute("dealerships", dealershipService.findAll());
         model.addAttribute("car", carService.findById(id).get());
         return "new_car";
-	}
+    }
 
     /**
      * Create new car
      */
-	@PostMapping("/car/new-edit")
-	public String createOrEditCar(Model model, Car car) {
-        if(car.getID() == 0) {
-            car.setImage("car.image");
-            car.setDealership(dealershipService.findById(car.getDealership().getID()).get());
-            boolean error = carService.save(car);
-            model.addAttribute("priceError", error);
-            if(!error) return "/invalid_car_price";
-		    return "redirect:/car/" + car.getID();
-        } else {
-            boolean error = carService.save(car);
-            model.addAttribute("priceError", !error);
-            if(!error) return "redirect:/car/" + car.getID() + "/new-edit";
-            car.setImage("a");
-            Dealership dealership = dealershipService.findById(car.getDealership().getID()).get();
-            car.setDealership(dealership);
-            carService.update(car);
+    @PostMapping("/car/new-edit")
+    public String createOrEditCar(@RequestParam List<Long> dealershipIDs, Model model, Car car) {
+        car.setImage("car.image");
+
+        List<Dealership> selectedDealerships = new ArrayList<>();
+        for (Long id : dealershipIDs) {
+            Optional<Dealership> dealership = dealershipService.findById(id);
+            dealership.ifPresent(selectedDealerships::add);
+        }
+        car.setDealerships(selectedDealerships);
+
+        boolean error = carService.save(car);
+        model.addAttribute("priceError", !error);
+
+        if (!error) {
             return "redirect:/car/" + car.getID();
         }
-		
-	}
+        return "invalid_car_price";
+    }
+
     /**
      * Get a car ID
      */
-	@GetMapping("/car/{id}")
-public String getCar(@PathVariable long id, Model model) {
-    Optional<Car> opCar = carService.findById(id);
-    if (opCar.isPresent()) {
-        model.addAttribute("car", opCar.get()); // <- Aquí se añade el coche con su ID
-        return "car";
+    @GetMapping("/car/{id}")
+    public String getCar(@PathVariable long id, Model model) {
+        Optional<Car> opCar = carService.findById(id);
+        if (opCar.isPresent()) {
+            model.addAttribute("car", opCar.get()); // <- Aquí se añade el coche con su ID
+            return "car";
+        }
+        return "car_not_found";
     }
-    return "car_not_found";
-}
 
     /**
      * Edit a car
@@ -119,29 +117,31 @@ public String getCar(@PathVariable long id, Model model) {
      * Save changes
      */
     @PostMapping("/car/{id}/edit")
-	public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
-		Optional<Car> car = carService.findById(id);
-		if (car.isPresent()) {
-			carService.update(updatedCar);
-			return "redirect:/car/" + id;
+    public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
+        Optional<Car> car = carService.findById(id);
+        if (car.isPresent()) {
+            carService.update(id, updatedCar);
+            return "redirect:/car/" + id;
         } else {
-        return "car_not_found";
-		}
+            return "car_not_found";
+        }
     }
 
     /**
      * Delete a car
      */
-	@PostMapping("/car/{id}/delete")
-	public String deleteCar(@PathVariable long id) {
-		Optional<Car> car = carService.findById(id);
-		if (car.isPresent()) {
-			carService.delete(id);
-            car.get().getDealership().getCars().remove(car.get());
-			return "redirect:/dealership/" + car.get().getDealership().getID();
-		}else{
-        return "car_not_found";
-		}
+    @PostMapping("/car/{id}/delete")
+    public String deleteCar(@PathVariable long id) {
+        Optional<Car> car = carService.findById(id);
+        if (car.isPresent()) {
+            for (Dealership dealership : car.get().getDealerships()) {
+                dealership.getCars().remove(car.get());
+            }
+            carService.delete(id);
+            return "redirect:/cars";
+        } else {
+            return "car_not_found";
+        }
 
     }
 
@@ -151,43 +151,41 @@ public String getCar(@PathVariable long id, Model model) {
      * Post a comment
      */
     @PostMapping("/car/{id}/comment")
-    public String newComment(@PathVariable long id, 
-                             @RequestParam String message, 
-                             @RequestParam int numberStars, 
-                             @RequestParam String authorName) {  
-    
+    public String newComment(@PathVariable long id,
+            @RequestParam String message,
+            @RequestParam int numberStars,
+            @RequestParam String authorName) {
+
         Optional<Car> opCar = carService.findById(id);
-    
+
         if (opCar.isPresent()) {
             Car car = opCar.get();
-            
+
             // Create comment with the received data
             Comment comment = new Comment();
             comment.setMessage(message);
             comment.setNumberStars(numberStars);
-    
+
             // Create and assign author
             User author = new User();
             author.setName(authorName);
             comment.setAuthor(author);
-    
+
             // Associate the comment and the car
             comment.setCarCommented(car);
-    
+
             // Save the commend in the repository
             commentService.save(car, comment);
-    
+
             // **Update the car with the new comments**
-            car.getComments().add(comment);  // Ensure the comment gets added to the list
-            carService.update(car);  // Ensure the car gets updated in the database
-    
-            return "redirect:/car/" + id;  // Refresh the page with the updated data
+            car.getComments().add(comment); // Ensure the comment gets added to the list
+            carService.update(id, car); // Ensure the car gets updated in the database
+
+            return "redirect:/car/" + id; // Refresh the page with the updated data
         }
-    
+
         return "car_not_found";
     }
-    
-
 
     /**
      * Delete a comment
@@ -196,10 +194,9 @@ public String getCar(@PathVariable long id, Model model) {
     public String deleteComment(@PathVariable Long carId, @PathVariable Long commentId) {
         Optional<Car> opCar = carService.findById(carId);
         if (opCar.isPresent()) {
-                commentService.delete(commentId, opCar.get());
-                return "redirect:/car/" + carId;       
+            commentService.delete(commentId, opCar.get());
+            return "redirect:/car/" + carId;
         }
         return "car_not_found";
     }
 }
-

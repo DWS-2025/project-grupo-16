@@ -8,24 +8,24 @@ public class Car {
     private String name;
     private String image;
     private int price;
-    private Dealership dealership;
+    private List <Dealership> dealerships = new ArrayList<>();
     private List <Comment> comments = new ArrayList<>();
 
     public Car() {}
 
-    public Car(String name, String image, int price, Dealership dealership) {
+    public Car(String name, String image, int price, List<Dealership> dealerships) {
         this.name = name;
         this.image = image;
         this.price = price;
-        this.dealership = dealership;
+        this.dealerships = dealerships;
     }
 
-    public Car(long ID, String name, String image, int price, Dealership dealership) {
+    public Car(long ID, String name, String image, int price, List<Dealership> dealerships) {
         this.ID = ID;
         this.name = name;
         this.image = image;
         this.price = price;
-        this.dealership = dealership;
+        this.dealerships = dealerships;
     }
 
     public Long getID() {
@@ -60,12 +60,12 @@ public class Car {
         this.price = price;
     }
 
-    public Dealership getDealership() {
-        return dealership;
+    public List <Dealership> getDealerships() {
+        return dealerships;
     }
 
-    public void setDealership(Dealership dealership) {
-        this.dealership = dealership;
+    public void setDealerships(List <Dealership> dealerships) {
+        this.dealerships = dealerships;
     }
 
     public List <Comment> getComments() {

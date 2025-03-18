@@ -1,5 +1,8 @@
 package com.projectdws.alquilercoches.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,18 +33,26 @@ public class DealershipSampleService {
         dealershipService.save(d2);
         dealershipService.save(d3);
 
+        List <Dealership> dps1 = new ArrayList<>();
+        dps1.add(d1);
+        dps1.add(d2);
 
-        Car c1 = new Car("Audi_A4", "Audi_A4", 60000, d1);
+        List <Dealership> dps2 = new ArrayList<>();
+        dps2.add(d2);
+        dps2.add(d3);
+
+
+        Car c1 = new Car("Audi_A4", "Audi_A4", 60000, dps1);
         c1.getComments().add(new Comment(new User("Pepe", "pepe@gmail.com", "563784956"), 5, "Corre que flipas"));
         c1.getComments().add(new Comment(new User("Juan", "juan@gmail.com", "563784959"), 2, "Se me cala todo el rato"));
         carService.save(c1);
 
 
-        Car c2 = new Car("BMW_M3", "BMW_M3", 50000, d1);
+        Car c2 = new Car("BMW_M3", "BMW_M3", 50000, dps1);
         carService.save(c2);
-        Car c3 = new Car("Ford_Mustang", "Ford_Mustang", 120000, d1);
+        Car c3 = new Car("Ford_Mustang", "Ford_Mustang", 120000, dps1);
         carService.save(c3);
-        Car c4 = new Car("Honda_Civic", "Honda_Civic", 15000, d2);
+        Car c4 = new Car("Honda_Civic", "Honda_Civic", 15000, dps2);
         carService.save(c4);
         
     }
