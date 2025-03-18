@@ -81,7 +81,7 @@ public class CarsController {
         boolean error = carService.save(car);
         model.addAttribute("priceError", error);
 
-        if (!error) {
+        if (error) {
             return "redirect:/car/" + car.getID();
         }
         return "invalid_car_price";
