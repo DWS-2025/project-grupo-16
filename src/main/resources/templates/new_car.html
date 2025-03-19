@@ -25,12 +25,22 @@
             <p style="color:red;">El precio debe ser positivo</p>
         {{/priceError}}
 
-        <label>Concesionario</label>
-        <select name="dealership.ID">
+        <p>Image: </p>
+        <input type='file' name='imageField' accept=".jpg, .jpeg, .png" />
+
+        <label>Concesionarios</label>
+        <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
             {{#dealerships}}
-            <option value="{{ID}}">{{name}}</option>
+            <div>
+                <input type="checkbox" 
+                    name="dealershipIDs" 
+                    id="dealership_{{ID}}" 
+                    value="{{ID}}"
+                    {{#selected}}checked{{/selected}}>
+                <label for="dealership_{{ID}}" style="margin-left: 5px;">{{name}}</label>
+            </div>
             {{/dealerships}}
-        </select>
+        </div>
 
         <input type="submit" value="Enviar">
     </form>
