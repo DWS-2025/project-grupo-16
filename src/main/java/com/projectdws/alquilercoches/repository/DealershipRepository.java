@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.stereotype.Component;
 
-import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Dealership;
 
 @Component

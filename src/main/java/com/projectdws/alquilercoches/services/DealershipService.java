@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Dealership;
 import com.projectdws.alquilercoches.repository.DealershipRepository;
 

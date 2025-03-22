@@ -15,7 +15,7 @@ public class CarRepository {
 
     final private static AtomicLong nextId = new AtomicLong(1L);
 
-    final private static ConcurrentHashMap<Long, Car> cars = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<Long, Car> cars = new ConcurrentHashMap<>();
 
     public List<Car> findAll() {
         return cars.values().stream().toList();

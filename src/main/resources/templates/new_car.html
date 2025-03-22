@@ -5,7 +5,7 @@
 {{> common/header}}
 
 <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
-    <form action="/car/new-edit" method="post">
+    <form action="/car/new-edit" method="post" enctype="multipart/form-data">
         <select name="ID">
             {{^edit}}
             <option value="0">Crear Coche</option>
@@ -16,31 +16,22 @@
         </select>
 
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="name" required>
+        <input value="{{^carExists}}{{car.name}}{{/carExists}}" type="text" name="name" id="name" required>
 
         <label for="price">Precio</label>
-        <input type="number" name="price" id="price" required>
-
-        {{^priceError}}
-            <p style="color:red;">El precio debe ser positivo</p>
-        {{/priceError}}
+        <input value="{{^carExists}}{{car.price}}{{/carExists}}" type="number" name="price" id="price" required>
 
         <p>Image: </p>
-        <input type='file' name='imageField' accept=".jpg, .jpeg, .png" />
+        <input type='file' name='imageFile' accept=".jpg, .jpeg, .png" />
 
-        <label>Concesionarios</label>
-        <div style="max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+        <br><br>
+
+        <select multiple name="dealershipIDs">
             {{#dealerships}}
-            <div>
-                <input type="checkbox" 
-                    name="dealershipIDs" 
-                    id="dealership_{{ID}}" 
-                    value="{{ID}}"
-                    {{#selected}}checked{{/selected}}>
-                <label for="dealership_{{ID}}" style="margin-left: 5px;">{{name}}</label>
-            </div>
+            <option value="{{dealership.ID}}" {{#isSelected}}selected{{/isSelected}}>{{dealership.name}}</option>
             {{/dealerships}}
-        </div>
+        </select>
+
 
         <input type="submit" value="Enviar">
     </form>

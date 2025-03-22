@@ -2,6 +2,7 @@ package com.projectdws.alquilercoches.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Car {
     private long ID = 0;
@@ -75,4 +76,22 @@ public class Car {
     public void setComments(List <Comment> comments) {
         this.comments = comments;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Car)) {
+            return false;
+        }
+        Car car = (Car) o;
+        return ID == car.ID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(ID);
+    }
+    
 }

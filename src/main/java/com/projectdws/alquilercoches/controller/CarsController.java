@@ -1,13 +1,11 @@
 package com.projectdws.alquilercoches.controller;
 
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 
+import com.projectdws.alquilercoches.dto.SelectedDealership;
 import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.Comment;
 import com.projectdws.alquilercoches.models.Dealership;
@@ -69,26 +65,46 @@ public class CarsController {
         model.addAttribute("priceError", true);
         model.addAttribute("cars", cars);
         model.addAttribute("edit", true);
-        model.addAttribute("dealerships", dealershipService.findAll());
+        //model.addAttribute("dealerships", dealershipService.findAll());
         model.addAttribute("car", carService.findById(id).get());
+        model.addAttribute("carExists", false);
+
+        List <SelectedDealership> selectedDealerships = new ArrayList<>();
+        for(Dealership dealership : dealershipService.findAll()) {
+            if(dealership.getCars().contains(carService.findById(id).get())) {
+                selectedDealerships.add(new SelectedDealership(dealership, true));
+            } else {
+                selectedDealerships.add(new SelectedDealership(dealership, false));
+            }
+        }
+        model.addAttribute("dealerships", selectedDealerships);
+
         return "new_car";
     }
 
     /**
      * Create new car
+     * @throws IOException 
      */
-    @PostMapping("/car/new-edit")
-    public String createOrEditCar(@RequestParam List<Long> dealershipIDs, Model model, Car car) {
-        car.setImage("car.image");
-
+    @PostMapping(consumes = "multipart/form-data", value = "/car/new-edit")    
+    public String createOrEditCar(@RequestParam List<Long> dealershipIDs, @RequestParam MultipartFile imageFile, Model model, Car car) throws IOException {
+        String imageName = imageService.createImage(imageFile);
+        car.setImage(imageService.getImage(imageName).getFile().getPath().replace("\\","/").replace("C:/Users/USUARIO/project-grupo-16/src/main/resources/static/",""));
         List<Dealership> selectedDealerships = new ArrayList<>();
         for (Long id : dealershipIDs) {
             Optional<Dealership> dealership = dealershipService.findById(id);
             dealership.ifPresent(selectedDealerships::add);
         }
         car.setDealerships(selectedDealerships);
-
-        boolean error = carService.save(car);
+        boolean error = false;
+        for(Dealership dealership : selectedDealerships) {
+            if (car.getID() == 0 || !dealership.getCars().contains(carService.findById(car.getID()).get())) {
+                error = carService.save(car);
+            } else {
+                error = carService.update(car.getID(), car);
+            }
+        }
+        
         model.addAttribute("priceError", error);
 
         if (error) {
@@ -111,33 +127,6 @@ public class CarsController {
     }
 
     /**
-     * Edit a car
-     */
-    @GetMapping("/car/{id}/edit")
-    public String editCar(Model model, @PathVariable long id) {
-        Optional<Car> car = carService.findById(id);
-        if (car.isPresent()) {
-            model.addAttribute("car", car.get());
-            return "edit_car";
-        }
-        return "car_not_found";
-    }
-
-    /**
-     * Save changes
-     */
-    @PostMapping("/car/{id}/edit")
-    public String updateCar(Model model, @PathVariable long id, Car updatedCar) {
-        Optional<Car> car = carService.findById(id);
-        if (car.isPresent()) {
-            carService.update(id, updatedCar);
-            return "redirect:/car/" + id;
-        } else {
-            return "car_not_found";
-        }
-    }
-
-    /**
      * Delete a car
      */
     @PostMapping("/car/{id}/delete")
@@ -156,7 +145,6 @@ public class CarsController {
     }
 
     // ----------- COMMENTS SECTION -----------
-
     /**
      * Post a comment
      */

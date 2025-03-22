@@ -1,7 +1,7 @@
 package com.projectdws.alquilercoches.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Dealership{
 
@@ -11,7 +11,7 @@ public class Dealership{
     private String address;
     private String tlf;
     private String description;
-    private List <Car> cars = new ArrayList<>();
+    private Set <Car> cars = new HashSet<>();
 
     public Dealership(){}
 
@@ -71,11 +71,11 @@ public class Dealership{
         this.description = description;
     }
 
-    public List <Car> getCars() {
+    public Set <Car> getCars() {
         return cars;
     }
 
-    public void setCars(List <Car> cars) {
+    public void setCars(Set <Car> cars) {
         this.cars = cars;
     }
 
