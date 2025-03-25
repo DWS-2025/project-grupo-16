@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.User;
 import com.projectdws.alquilercoches.models.Comment;
-import com.projectdws.alquilercoches.models.Dealership;
 import com.projectdws.alquilercoches.services.CarService;
 import com.projectdws.alquilercoches.services.CommentService;
 import com.projectdws.alquilercoches.services.UserService;
@@ -57,7 +56,7 @@ public class UsersController {
 	}
 
     @GetMapping("/user/{id}")
-    public String getUser(Model model, @PathVariable long id) {
+    public String getUser(Model model, @PathVariable Long id) {
         Optional<User> opUser = userService.findById(id);
         if (opUser.isPresent()) {
             model.addAttribute("user", opUser.get());
@@ -67,7 +66,7 @@ public class UsersController {
     }
 
     @GetMapping("/user/{id}/edit")
-    public String editUser(Model model, @PathVariable long id) {
+    public String editUser(Model model, @PathVariable Long id) {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             model.addAttribute("user", user.get());

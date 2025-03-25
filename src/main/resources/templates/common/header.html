@@ -1,26 +1,48 @@
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="">
-        <nav class="navbar navbar-expand-lg">
-          <div class="container">
-            <a class="navbar-brand" href="/"><h2>Alquila <em>YA</em></h2></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-              <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                      <a class="nav-link" href="/">Inicio
-                        <span class="sr-only">(current)</span>
-                      </a>
-                  </li> 
-      
-                  <li class="nav-item "><a class="nav-link" href="/cars">Coches Disponibles</a></li>
-                  <li class="nav-item "><a class="nav-link" href="/users">Usuarios</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
+  <!-- Header -->
+  <header class="">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <h2>Alquila <em>YA</em></h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Inicio
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+
+            <li class="nav-item ">
+              <a class="nav-link" href="/cars">Coches Disponibles</a>
+            </li>
+            {{#user}}
+            <li class="nav-item">
+              <a class="nav-link" href="/user">
+                <div class="square-link">
+                  <h5 class="card-title">{{name}}</h5>
+                  <p class="card-text text-muted">{{email}}</p>
+                  <p>Accede a tu perfil</p>
+                </div>
+              </a>
+            </li>
+            {{/user}}
+            {{^user}}
+            <li class="nav-item">
+              <a class="nav-link" href="/login">
+                <p>Iniciar sesión</p>
+              </a>
+            </li>
+            {{/user}}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>

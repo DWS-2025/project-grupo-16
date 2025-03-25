@@ -20,12 +20,12 @@ public class UserRepository {
         return users.values().stream().toList();
     }
 
-    public Optional<User> findById(long id) {
+    public Optional<User> findById(Long id) {
         return Optional.ofNullable(users.get(id));
     }
 
     public void save(User user) {
-        long id = user.getID();
+        Long id = user.getID();
         if (id == 0) {
             id = nextId.getAndIncrement();
             user.setID(id);
@@ -33,14 +33,14 @@ public class UserRepository {
         users.put(id, user);
     }
 
-    public void update(long id, User updatedUser) {
+    public void update(Long id, User updatedUser) {
         User oldUser = users.get(id);
         oldUser.setName(updatedUser.getName());
         oldUser.setEmail(updatedUser.getEmail());
         oldUser.setTlf(updatedUser.getTlf());
     }
 
-    public void delete(long id) {
+    public void delete(Long id) {
         User user = users.get(id);
         if (user != null) {
             user.getCars().clear();

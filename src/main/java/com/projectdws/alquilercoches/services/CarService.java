@@ -19,7 +19,7 @@ public class CarService {
 		return carRepository.findAll();
 	}
 
-	public Optional<Car> findById(long id) {
+	public Optional<Car> findById(Long id) {
 		return carRepository.findById(id);
 	}
 
@@ -31,7 +31,7 @@ public class CarService {
 		return false;
 	}
 
-    public boolean update(long id, Car car) {
+    public boolean update(Long id, Car car) {
 		if(car.getPrice() > 0) {
 			carRepository.update(id, car);
 			return true;
@@ -40,7 +40,7 @@ public class CarService {
 	}
 	
 
-    public void delete(long id) {
+    public void delete(Long id) {
         carRepository.delete(id);
     }
 }

@@ -20,12 +20,12 @@ public class DealershipRepository {
         return dealerships.values().stream().toList();
     }
 
-    public Optional<Dealership> findById(long id) {
+    public Optional<Dealership> findById(Long id) {
         return Optional.ofNullable(dealerships.get(id));
     }
 
     public void save(Dealership dealership) {
-        long id = dealership.getID();
+        Long id = dealership.getID();
         if (id == 0) {
             id = nextId.getAndIncrement();
             dealership.setID(id);
@@ -33,7 +33,7 @@ public class DealershipRepository {
         dealerships.put(id, dealership);
     }
 
-    public void update(long id, Dealership updatedDealership) {
+    public void update(Long id, Dealership updatedDealership) {
         Dealership oldDealership = dealerships.get(id);
      oldDealership.setName(updatedDealership.getName());
      /*oldDealership.setImage(updatedDealership.getImage());*/

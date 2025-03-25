@@ -4,7 +4,12 @@ import com.projectdws.alquilercoches.models.Car;
 import com.projectdws.alquilercoches.models.User;
 import com.projectdws.alquilercoches.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,19 +19,26 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> getLoggedUser() {
-        List<User> users = userRepository.findAll();
-        if (!users.isEmpty()) {
-            return Optional.of(users.get(0));
+    @ModelAttribute("user")
+	public User getLoggedUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+    if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            Long id = ((User) principal).getID();
+            Optional<User> userOptional = this.findById(id);
+            return userOptional.orElse(null);
         }
-        return Optional.empty(); 
     }
+    return null;
+	}
 
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-	public Optional<User> findById(long id) {
+	public Optional<User> findById(Long id) {
 		return userRepository.findById(id);
 	}
 
@@ -39,7 +51,7 @@ public class UserService {
 	}
 	
 
-    public void delete(long id) {
+    public void delete(Long id) {
         userRepository.delete(id);
     }
 }

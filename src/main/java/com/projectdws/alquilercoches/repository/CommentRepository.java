@@ -24,17 +24,17 @@ public class CommentRepository {
         return comments.values().stream().toList();
     }
     
-    public Optional<Comment> findById(long id) {
+    public Optional<Comment> findById(Long id) {
         return Optional.ofNullable(comments.get(id));
     }
 
     public void save(Comment comment) {
-        long id = comment.getID();
+        Long id = comment.getID();
         if (id == 0) {
-            id = (int) nextId.getAndIncrement(); // Assigns a new ID if not already set.
+            id = nextId.getAndIncrement(); // Assigns a new ID if not already set.
             comment.setID(id);
         }
-        comments.put((long) id, comment);
+        comments.put((Long) id, comment);
     }
 
     public void delete(Comment comment) {

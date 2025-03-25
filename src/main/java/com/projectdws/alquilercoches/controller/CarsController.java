@@ -59,7 +59,7 @@ public class CarsController {
     }
 
     @GetMapping("/car/{id}/new-edit")
-    public String showEditCarForm(Model model, @PathVariable long id, Car car) {
+    public String showEditCarForm(Model model, @PathVariable Long id, Car car) {
         List<Car> cars = new ArrayList<>();
         cars.add(carService.findById(id).get());
         model.addAttribute("priceError", true);
@@ -117,7 +117,7 @@ public class CarsController {
      * Get a car ID
      */
     @GetMapping("/car/{id}")
-    public String getCar(@PathVariable long id, Model model) {
+    public String getCar(@PathVariable Long id, Model model) {
         Optional<Car> opCar = carService.findById(id);
         if (opCar.isPresent()) {
             model.addAttribute("car", opCar.get()); // <- Aquí se añade el coche con su ID
@@ -130,7 +130,7 @@ public class CarsController {
      * Delete a car
      */
     @PostMapping("/car/{id}/delete")
-    public String deleteCar(@PathVariable long id) {
+    public String deleteCar(@PathVariable Long id) {
         Optional<Car> car = carService.findById(id);
         if (car.isPresent()) {
             for (Dealership dealership : car.get().getDealerships()) {
@@ -149,7 +149,7 @@ public class CarsController {
      * Post a comment
      */
     @PostMapping("/car/{id}/comment")
-    public String newComment(@PathVariable long id,
+    public String newComment(@PathVariable Long id,
             @RequestParam String message,
             @RequestParam int numberStars,
             @RequestParam String authorName) {

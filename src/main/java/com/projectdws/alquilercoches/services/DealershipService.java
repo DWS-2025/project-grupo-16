@@ -19,7 +19,7 @@ public class DealershipService {
 		return dealershipRepository.findAll();
 	}
 
-	public Optional<Dealership> findById(long id) {
+	public Optional<Dealership> findById(Long id) {
 		return dealershipRepository.findById(id);
 	}
 

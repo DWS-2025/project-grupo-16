@@ -21,7 +21,7 @@ public class Car {
         this.dealerships = dealerships;
     }
 
-    public Car(long ID, String name, String image, int price, List<Dealership> dealerships) {
+    public Car(Long ID, String name, String image, int price, List<Dealership> dealerships) {
         this.ID = ID;
         this.name = name;
         this.image = image;

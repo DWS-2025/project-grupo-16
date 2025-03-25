@@ -21,12 +21,12 @@ public class CarRepository {
         return cars.values().stream().toList();
     }
 
-    public Optional<Car> findById(long id) {
+    public Optional<Car> findById(Long id) {
         return Optional.ofNullable(cars.get(id));
     }
 
     public static void save(Car car) {
-        long id = car.getID();
+        Long id = car.getID();
         if (id == 0) {
             id = nextId.getAndIncrement();
             car.setID(id);
@@ -38,7 +38,7 @@ public class CarRepository {
         }
     }
 
-    public void update(long id, Car updatedCar) {
+    public void update(Long id, Car updatedCar) {
         Car oldCar = cars.get(id);
         oldCar.setName(updatedCar.getName());
         oldCar.setImage(updatedCar.getImage());
@@ -46,7 +46,7 @@ public class CarRepository {
         oldCar.setDealerships(updatedCar.getDealerships());
     }
 
-    public void delete(long id) {
+    public void delete(Long id) {
         cars.remove(id);
     }
 }

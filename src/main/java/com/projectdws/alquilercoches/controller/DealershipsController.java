@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projectdws.alquilercoches.models.Dealership;
 import com.projectdws.alquilercoches.services.DealershipService;
+import com.projectdws.alquilercoches.services.UserService;
+
 
 @Controller
 public class DealershipsController {
@@ -19,12 +21,25 @@ public class DealershipsController {
 	@Autowired
 	private DealershipService dealershipService;
 
+	@Autowired
+	private UserService userService;
+
 	@GetMapping("/")
-	public String getDealershipsFromIndex(Model model) {
+	public String getDealershipsFromIndex(Model model, Long id) {
 		model.addAttribute("dealership", dealershipService.findAll());
 		System.out.println(dealershipService.findAll());
 		return "index";
 	}
+
+
+	@GetMapping("/{id}")
+	public String getDealershipsAndUserFromIndex(Model model, @PathVariable Long id) {
+		model.addAttribute("dealership", dealershipService.findAll());
+		model.addAttribute("user", userService.findById(id));
+		System.out.println(dealershipService.findAll());
+		return "index";
+	}
+
 
 	@GetMapping("/dealership")
 	public String getDealerships2(Model model) {
@@ -33,7 +48,7 @@ public class DealershipsController {
 	}
 
 	@GetMapping("/dealership/{id}")
-	public String getDealershipById(Model model, @PathVariable long id) {
+	public String getDealershipById(Model model, @PathVariable Long id) {
 		Optional<Dealership> dealership = dealershipService.findById(id);
 		if (dealership.isPresent()) {
 			model.addAttribute("dealership", dealership.get());

@@ -23,11 +23,11 @@ public class Dealership{
         this.description = description;
     }
 
-    public long getID() {
+    public Long getID() {
         return ID;
     }
 
-    public void setID(long ID) {
+    public void setID(Long ID) {
         this.ID = ID;
     }
 
