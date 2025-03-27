@@ -6,14 +6,9 @@
 
 <div class="container text-center" style="margin-top: 0px; padding-top: 175px;">
     <form action="/car/new-edit" method="post" enctype="multipart/form-data">
-        <select name="ID">
-            {{^edit}}
-            <option value="0">Crear Coche</option>
-            {{/edit}}
-            {{#cars}}
-            <option value="{{ID}}">{{name}}</option>
-            {{/cars}}
-        </select>
+        {{#editingCar}}
+            <input type="text" value="{{car.ID}}" name="ID" hidden>
+        {{/editingCar}}
 
         <label for="name">Nombre</label>
         <input value="{{^carExists}}{{car.name}}{{/carExists}}" type="text" name="name" id="name" required>
@@ -28,7 +23,12 @@
 
         <select multiple name="dealershipIDs">
             {{#dealerships}}
+            {{#editingCar}}
             <option value="{{dealership.ID}}" {{#isSelected}}selected{{/isSelected}}>{{dealership.name}}</option>
+            {{/editingCar}}
+            {{^editingCar}}
+            <option value="{{ID}}">{{name}}</option>
+            {{/editingCar}}
             {{/dealerships}}
         </select>
 

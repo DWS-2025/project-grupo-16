@@ -21,7 +21,7 @@ public class ImageService {
 
         String originalName = multiPartFile.getOriginalFilename();
 
-        if (!originalName.matches(".*\\.(jpg|jpeg|gif|png)")) {
+        if (!originalName.matches(".*\\.(jpg|jpeg|gif|png|JPG|JPEG|GIF|PNG)")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The url is not an image resource");
         }
 

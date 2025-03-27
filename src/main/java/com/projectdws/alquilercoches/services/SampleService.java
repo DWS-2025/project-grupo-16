@@ -61,18 +61,18 @@ public class SampleService {
         Comment com2 = new Comment(u2, 2, "Se me cala todo el rato");
 
 
-        Car c1 = new Car("Audi_A4", "Audi_A4", 60000, dps1);
+        Car c1 = new Car("Audi_A4", "/images/Audi_A4.jpg", 60000, dps1);
         c1.getComments().add(com1);
         c1.getComments().add(com2);
         carService.save(c1);
 
-        Car c2 = new Car("BMW_M3", "BMW_M3", 50000, dps1);
+        Car c2 = new Car("BMW_M3", "/images/BMW_M3.jpg", 50000, dps1);
         carService.save(c2);
 
-        Car c3 = new Car("Ford_Mustang", "Ford_Mustang", 120000, dps1);
+        Car c3 = new Car("Ford_Mustang", "/images/Ford_Mustang.jpg", 120000, dps1);
         carService.save(c3);
         
-        Car c4 = new Car("Honda_Civic", "Honda_Civic", 15000, dps2);
+        Car c4 = new Car("Honda_Civic", "/images/Honda_Civic.jpg", 15000, dps2);
         carService.save(c4);
         
     }

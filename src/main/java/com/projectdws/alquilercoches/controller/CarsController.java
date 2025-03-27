@@ -1,5 +1,6 @@
 package com.projectdws.alquilercoches.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +53,9 @@ public class CarsController {
     @GetMapping("/car/new-edit")
     public String showEditCarForm(Model model, Car car) {
         model.addAttribute("priceError", true);
-        model.addAttribute("cars", carService.findAll());
-        model.addAttribute("edit", false);
         model.addAttribute("dealerships", dealershipService.findAll());
+        model.addAttribute("carExists", true);
+        model.addAttribute("editingCar", false);
         return "new_car";
     }
 
@@ -63,11 +64,10 @@ public class CarsController {
         List<Car> cars = new ArrayList<>();
         cars.add(carService.findById(id).get());
         model.addAttribute("priceError", true);
-        model.addAttribute("cars", cars);
-        model.addAttribute("edit", true);
         //model.addAttribute("dealerships", dealershipService.findAll());
         model.addAttribute("car", carService.findById(id).get());
         model.addAttribute("carExists", false);
+        model.addAttribute("editingCar", true);
 
         List <SelectedDealership> selectedDealerships = new ArrayList<>();
         for(Dealership dealership : dealershipService.findAll()) {
@@ -89,38 +89,53 @@ public class CarsController {
     @PostMapping(consumes = "multipart/form-data", value = "/car/new-edit")    
     public String createOrEditCar(@RequestParam List<Long> dealershipIDs, @RequestParam MultipartFile imageFile, Model model, Car car) throws IOException {
         String imageName = imageService.createImage(imageFile);
-        car.setImage(imageService.getImage(imageName).getFile().getPath().replace("\\","/").replace("C:/Users/USUARIO/project-grupo-16/src/main/resources/static/",""));
+        File file = new File(imageService.getImage(imageName).getFile().getPath());
+        System.out.println(file.exists());
+        car.setImage(imageService.getImage(imageName).getFile().getPath().replace("\\","/").replace("C:/Users/USUARIO/project-grupo-16/src/main/resources/static",""));
         List<Dealership> selectedDealerships = new ArrayList<>();
         for (Long id : dealershipIDs) {
             Optional<Dealership> dealership = dealershipService.findById(id);
             dealership.ifPresent(selectedDealerships::add);
         }
         car.setDealerships(selectedDealerships);
-        boolean error = false;
+        boolean noError = false;
         for(Dealership dealership : selectedDealerships) {
             if (car.getID() == 0 || !dealership.getCars().contains(carService.findById(car.getID()).get())) {
-                error = carService.save(car);
+                noError = carService.save(car);
             } else {
-                error = carService.update(car.getID(), car);
+                noError = carService.update(car.getID(), car);
             }
         }
         
-        model.addAttribute("priceError", error);
+        model.addAttribute("priceError", noError);
 
-        if (error) {
-            return "redirect:/car/" + car.getID();
+        String stringReturn = "invalid_car_price";
+        if (noError) {
+            boolean isTrue = true;
+            while (isTrue) {
+                System.out.println("Ejecutando....");
+                
+                System.out.println(imageName);
+                if (file.exists()) {
+                    stringReturn = "redirect:/car/" + car.getID();
+                    isTrue = false;
+                }
+            }
         }
-        return "invalid_car_price";
+        return stringReturn;
     }
 
     /**
      * Get a car ID
      */
     @GetMapping("/car/{id}")
-    public String getCar(@PathVariable Long id, Model model) {
+    public String getCar(@PathVariable Long id, Model model) throws InterruptedException {
+        Thread.sleep(500);
         Optional<Car> opCar = carService.findById(id);
         if (opCar.isPresent()) {
-            model.addAttribute("car", opCar.get()); // <- Aquí se añade el coche con su ID
+            model.addAttribute("car", opCar.get());
+            model.addAttribute("timestamp", System.currentTimeMillis());
+
             return "car";
         }
         return "car_not_found";

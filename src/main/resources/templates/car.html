@@ -9,7 +9,7 @@
   <p>
   <h4>Nombre: {{car.name}}</h4>
   </p>
-  <img src="{{car.image}}" alt="{{car.name}}" style="max-width: 500px;">
+  <img src="{{car.image}}?v={{timestamp}}" alt="{{car.name}}" style="max-width: 500px;" id="carImage">
   <p>
   <h4>Precio: {{car.price}}$</h4>
   </p>
@@ -58,5 +58,15 @@
   </form>
 
 </div>
+
+<script>
+  if (!sessionStorage.getItem("reloaded")) {
+    setTimeout(function () {
+      console.log("Recargando la página...");
+      sessionStorage.setItem("reloaded", "true"); // Marca como recargado
+      location.reload(); // 🔄 Recarga la página después del retraso
+    }, 2000);
+  }
+</script>
 
 {{> common/footer}}
