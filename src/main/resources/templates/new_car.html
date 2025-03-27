@@ -17,7 +17,14 @@
         <input value="{{^carExists}}{{car.price}}{{/carExists}}" type="number" name="price" id="price" required>
 
         <p>Image: </p>
-        <input type='file' name='imageFile' accept=".jpg, .jpeg, .png" />
+        {{#editingCar}}
+            <img src="{{car.image}}" type='file' name='imageFile' accept=".jpg, .jpeg, .png" style="width: 300px;"/>
+            <br>
+            <span>Campo opcional: </span>
+        {{/editingCar}}
+            <input type='file' name='imageFile' accept=".jpg, .jpeg, .png"/>
+        
+        
 
         <br><br>
 

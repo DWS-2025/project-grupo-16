@@ -69,9 +69,9 @@ public class CarsController {
         model.addAttribute("carExists", false);
         model.addAttribute("editingCar", true);
 
-        List <SelectedDealership> selectedDealerships = new ArrayList<>();
-        for(Dealership dealership : dealershipService.findAll()) {
-            if(dealership.getCars().contains(carService.findById(id).get())) {
+        List<SelectedDealership> selectedDealerships = new ArrayList<>();
+        for (Dealership dealership : dealershipService.findAll()) {
+            if (dealership.getCars().contains(carService.findById(id).get())) {
                 selectedDealerships.add(new SelectedDealership(dealership, true));
             } else {
                 selectedDealerships.add(new SelectedDealership(dealership, false));
@@ -84,45 +84,50 @@ public class CarsController {
 
     /**
      * Create new car
-     * @throws IOException 
+     *
+     * @throws IOException
      */
-    @PostMapping(consumes = "multipart/form-data", value = "/car/new-edit")    
+    @PostMapping(consumes = "multipart/form-data", value = "/car/new-edit")
     public String createOrEditCar(@RequestParam List<Long> dealershipIDs, @RequestParam MultipartFile imageFile, Model model, Car car) throws IOException {
-        String imageName = imageService.createImage(imageFile);
-        File file = new File(imageService.getImage(imageName).getFile().getPath());
-        System.out.println(file.exists());
-        car.setImage(imageService.getImage(imageName).getFile().getPath().replace("\\","/").replace("C:/Users/USUARIO/project-grupo-16/src/main/resources/static",""));
+        if(car.getID() != 0) {
+            Optional <Car> opCar = carService.findById(car.getID());
+            if(opCar.isPresent()) {
+                car = opCar.get();
+            } else {
+                throw new RuntimeException();
+            }
+        }
+        
+        String imageName;
+        if (!(imageFile.getOriginalFilename().equals(""))) {
+            imageName = imageService.createImage(imageFile);
+            car.setImage(imageService.getImage(imageName).getFile().getPath().replace("\\", "/").replace("C:/Users/USUARIO/project-grupo-16/src/main/resources/static", ""));
+        } else if(car.getID() == 0) {
+            return "image_not_sent";
+        }
+
         List<Dealership> selectedDealerships = new ArrayList<>();
         for (Long id : dealershipIDs) {
             Optional<Dealership> dealership = dealershipService.findById(id);
             dealership.ifPresent(selectedDealerships::add);
         }
+
         car.setDealerships(selectedDealerships);
         boolean noError = false;
-        for(Dealership dealership : selectedDealerships) {
+        for (Dealership dealership : selectedDealerships) {
             if (car.getID() == 0 || !dealership.getCars().contains(carService.findById(car.getID()).get())) {
                 noError = carService.save(car);
             } else {
                 noError = carService.update(car.getID(), car);
             }
         }
-        
+
         model.addAttribute("priceError", noError);
 
-        String stringReturn = "invalid_car_price";
         if (noError) {
-            boolean isTrue = true;
-            while (isTrue) {
-                System.out.println("Ejecutando....");
-                
-                System.out.println(imageName);
-                if (file.exists()) {
-                    stringReturn = "redirect:/car/" + car.getID();
-                    isTrue = false;
-                }
-            }
+            return "redirect:/car/" + car.getID();
         }
-        return stringReturn;
+        return "invalid_car_price";
     }
 
     /**
