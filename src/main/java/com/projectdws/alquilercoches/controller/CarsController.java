@@ -3,6 +3,7 @@ package com.projectdws.alquilercoches.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,7 +102,12 @@ public class CarsController {
         String imageName;
         if (!(imageFile.getOriginalFilename().equals(""))) {
             imageName = imageService.createImage(imageFile);
-            car.setImage(imageService.getImage(imageName).getFile().getPath().replace("\\", "/").replace("C:/Users/USUARIO/project-grupo-16/src/main/resources/static", ""));
+            String URL = imageService.getImage(imageName).getFile().getPath();
+            System.out.println(URL);
+            String[] split = URL.replace("\\", "/").split("/static");
+            System.out.println(Arrays.toString(split));
+            car.setImage(split[1]); 
+            
         } else if(car.getID() == 0) {
             return "image_not_sent";
         }
