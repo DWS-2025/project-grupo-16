@@ -1,20 +1,32 @@
 package com.projectdws.alquilercoches.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Comment {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long ID = 0;
+
     private int numberStars;
     private String message;
+	@ManyToOne
 	private User author;
+	@ManyToOne
 	private Car carCommented;
-    
 
     public Comment() {}
 
-	public Comment(User author, int numberStars, String message) {
+	public Comment(User author, int numberStars, String message, Car carCommented) {
 		this.author = author;
         this.numberStars = numberStars;
 		this.message = message;
+		this.carCommented = carCommented;
 	}
 
 	public Long getID() {

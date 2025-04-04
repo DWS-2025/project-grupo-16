@@ -47,11 +47,11 @@ public class UserService {
 	}
 
     public void update(User user) {
-		userRepository.update(user.getID(),user);
+		userRepository.save(user);
 	}
 	
 
-    public void delete(Long id) {
-        userRepository.delete(id);
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 }

@@ -31,16 +31,16 @@ public class CarService {
 		return false;
 	}
 
-    public boolean update(Long id, Car car) {
+    public boolean update(Car car) {
 		if(car.getPrice() > 0) {
-			carRepository.update(id, car);
+			carRepository.save(car);
 			return true;
 		}
 		return false;
 	}
 	
 
-    public void delete(Long id) {
-        carRepository.delete(id);
+    public void delete(Car car) {
+        carRepository.delete(car);
     }
 }

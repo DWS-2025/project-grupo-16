@@ -124,7 +124,7 @@ public class CarsController {
             if (car.getID() == 0 || !dealership.getCars().contains(carService.findById(car.getID()).get())) {
                 noError = carService.save(car);
             } else {
-                noError = carService.update(car.getID(), car);
+                noError = carService.update(car);
             }
         }
 
@@ -157,12 +157,14 @@ public class CarsController {
      */
     @PostMapping("/car/{id}/delete")
     public String deleteCar(@PathVariable Long id) {
-        Optional<Car> car = carService.findById(id);
-        if (car.isPresent()) {
-            for (Dealership dealership : car.get().getDealerships()) {
-                dealership.getCars().remove(car.get());
+        Optional<Car> opCar = carService.findById(id);
+        if (opCar.isPresent()) {
+            for (Dealership dealership : opCar.get().getDealerships()) {
+                dealership.getCars().remove(opCar.get());
             }
-            carService.delete(id);
+            if(opCar.isPresent()) {
+                carService.delete(opCar.get());
+            } 
             return "redirect:/cars";
         } else {
             return "car_not_found";
@@ -199,11 +201,11 @@ public class CarsController {
             comment.setCarCommented(car);
 
             // Save the commend in the repository
-            commentService.save(car, comment);
+            commentService.save(comment);
 
             // **Update the car with the new comments**
             car.getComments().add(comment); // Ensure the comment gets added to the list
-            carService.update(id, car); // Ensure the car gets updated in the database
+            carService.update(car); // Ensure the car gets updated in the database
 
             return "redirect:/car/" + id; // Refresh the page with the updated data
         }
@@ -218,7 +220,7 @@ public class CarsController {
     public String deleteComment(@PathVariable Long carId, @PathVariable Long commentId) {
         Optional<Car> opCar = carService.findById(carId);
         if (opCar.isPresent()) {
-            commentService.delete(commentId, opCar.get());
+            commentService.delete(commentId);
             return "redirect:/car/" + carId;
         }
         return "car_not_found";

@@ -3,14 +3,25 @@ package com.projectdws.alquilercoches.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
+@Entity
 public class Dealership{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long ID = 0;
+
     private String name;
     private String location;
     private String address;
     private String tlf;
     private String description;
+    @ManyToMany(mappedBy="dealerships")
     private Set <Car> cars = new HashSet<>();
 
     public Dealership(){}

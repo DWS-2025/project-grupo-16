@@ -4,12 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Car {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long ID = 0;
+
     private String name;
     private String image;
     private int price;
+    @ManyToMany
     private List <Dealership> dealerships = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carCommented")
     private List <Comment> comments = new ArrayList<>();
 
     public Car() {}
