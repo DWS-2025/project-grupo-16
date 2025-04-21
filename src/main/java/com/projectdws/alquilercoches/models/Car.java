@@ -17,7 +17,7 @@ public class Car {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long ID = 0;
+    private long ID;
 
     private String name;
     private String image;
