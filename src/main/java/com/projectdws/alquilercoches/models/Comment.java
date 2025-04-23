@@ -4,73 +4,63 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Comment {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long ID = 0;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long ID;
 
-    private int numberStars;
+    private String authorName;
     private String message;
-	@ManyToOne
-	private User author;
-	@ManyToOne
-	private Car carCommented;
+    private int numberStars;
+
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car carCommented;
 
     public Comment() {}
 
-	public Comment(User author, int numberStars, String message, Car carCommented) {
-		this.author = author;
-        this.numberStars = numberStars;
-		this.message = message;
-		this.carCommented = carCommented;
-	}
+    public Long getID() {
+        return ID;
+    }
 
-	public Long getID() {
-		return ID;
-	}
+    public void setID(Long ID) {
+        this.ID = ID;
+    }
 
-	public void setID(Long ID) {
-		this.ID = ID;
-	}
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public int getNumberStars() {
-		return numberStars;
-	}
+        return numberStars;
+    }
 
-	public void setNumberStars(int numberStars) {
-		this.numberStars = numberStars;
-	}
+    public void setNumberStars(int numberStars) {
+        this.numberStars = numberStars;
+    }
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public User getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(User author) {
-		this.author = author;
-	}
-    
     public Car getCarCommented() {
-		return carCommented;
-	}
+        return carCommented;
+    }
 
-	public void setCarCommented(Car carCommented) {
-		this.carCommented = carCommented;
-	}	
-
-	@Override
-	public String toString() {
-		return "Comment [ID: " + ID + ", Author: " + author.getName() + "NumberStars: " + numberStars + ", Message: " + message + "]";
-	}
+    public void setCarCommented(Car carCommented) {
+        this.carCommented = carCommented;
+    }
 }

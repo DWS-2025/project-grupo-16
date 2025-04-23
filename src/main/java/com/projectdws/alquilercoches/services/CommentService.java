@@ -16,28 +16,15 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    @Autowired
-    private CarRepository carRepository;
+    public void save(Comment comment) {
+        commentRepository.save(comment);
+    }
 
-    public List<Comment> findAll() {
-        return commentRepository.findAll();
+    public void deleteById(Long id) {
+        commentRepository.deleteById(id);
     }
 
     public Optional<Comment> findById(Long id) {
         return commentRepository.findById(id);
-    }
-
-    public void save(Comment comment) { 
-        commentRepository.save(comment);
-    }
-
-    public void delete(Long commentId) {
-        Optional<Comment> opComment = commentRepository.findById(commentId);
-        Car car = opComment.get().getCarCommented();
-        if (opComment.isPresent()) {
-            car.getComments().remove(opComment.get()); // Remove comment from list
-            carRepository.save(car);  // Update car without the comment
-            commentRepository.delete(opComment.get());  // Delete comment from Data Base
-        }
     }
 }

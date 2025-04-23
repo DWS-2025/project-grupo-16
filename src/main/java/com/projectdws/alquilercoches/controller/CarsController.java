@@ -177,52 +177,34 @@ public class CarsController {
      * Post a comment
      */
     @PostMapping("/car/{id}/comment")
-    public String newComment(@PathVariable Long id,
-            @RequestParam String message,
-            @RequestParam int numberStars,
-            @RequestParam String authorName) {
+public String postComment(
+        @PathVariable Long id,
+        @RequestParam String authorName,
+        @RequestParam String message,
+        @RequestParam int numberStars
+) {
+    Optional<Car> carOpt = carService.findById(id);
+    if (carOpt.isPresent()) {
+        Car car = carOpt.get();
 
-        Optional<Car> opCar = carService.findById(id);
+        Comment comment = new Comment();
+        comment.setAuthorName(authorName);
+        comment.setMessage(message);
+        comment.setNumberStars(numberStars);
+        comment.setCarCommented(car);
 
-        if (opCar.isPresent()) {
-            Car car = opCar.get();
-
-            // Create comment with the received data
-            Comment comment = new Comment();
-            comment.setMessage(message);
-            comment.setNumberStars(numberStars);
-
-            // Create and assign author
-            User author = new User();
-            author.setName(authorName);
-            comment.setAuthor(author);
-
-            // Associate the comment and the car
-            comment.setCarCommented(car);
-
-            // Save the commend in the repository
-            commentService.save(comment);
-
-            // **Update the car with the new comments**
-            car.getComments().add(comment); // Ensure the comment gets added to the list
-            carService.update(car); // Ensure the car gets updated in the database
-
-            return "redirect:/car/" + id; // Refresh the page with the updated data
-        }
-
-        return "car_not_found";
+        commentService.save(comment);
     }
+
+    return "redirect:/car/" + id;
+}
 
     /**
      * Delete a comment
      */
     @PostMapping("/car/{carId}/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable Long carId, @PathVariable Long commentId) {
-        Optional<Car> opCar = carService.findById(carId);
-        if (opCar.isPresent()) {
-            commentService.delete(commentId);
-            return "redirect:/car/" + carId;
-        }
-        return "car_not_found";
-    }
+public String deleteComment(@PathVariable Long carId, @PathVariable Long commentId) {
+    commentService.deleteById(commentId);
+    return "redirect:/car/" + carId;
+}
 }

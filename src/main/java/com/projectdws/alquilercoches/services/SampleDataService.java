@@ -50,8 +50,8 @@ public class SampleDataService {
         Car c3 = new Car("Ford_Mustang", "/images/Ford_Mustang.jpg", 120000, dps1);
         Car c4 = new Car("Honda_Civic", "/images/Honda_Civic.jpg", 15000, dps2);
         
-        Comment com1 = new Comment(u1, 5, "Corre que flipas", c1);
-        Comment com2 = new Comment(u2, 2, "Se me cala todo el rato", c1);
+       //Comment com1 = new Comment(u1, 5, "Corre que flipas", c1);
+       //Comment com2 = new Comment(u2, 2, "Se me cala todo el rato", c1);
 
         dealershipRepository.save(d1);
         dealershipRepository.save(d2);
@@ -70,7 +70,7 @@ public class SampleDataService {
         carRepository.save(c3);
         carRepository.save(c4);
 
-        commentRepository.save(com1);
-        commentRepository.save(com2);   
+       // commentRepository.save(com1);
+       // commentRepository.save(com2);   
     }
 }
